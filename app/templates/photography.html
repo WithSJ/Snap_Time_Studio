@@ -1,8 +1,42 @@
 {% extends "layout.html"%}
 
 {% block content%}
-    {% for i in range(1,7) %}
-        <h{{i}}>Hello, Photography!</h{{i}}>
-    {% endfor %}
+
+
+  <div class="row">
+    {%for i in range(1,11)%}
+      <div class="col-lg-4 col-md-12 mb-4 mb-lg-0"  >
+        <img
+          src="../static/img/{{i}}.jpg"
+          class="w-100 shadow-1-strong rounded mb-4"
+          alt=""
+        />
+
+        <img
+          src="../static/img/{{i+1}}.jpg"
+          class="w-100 shadow-1-strong rounded mb-4"
+          alt=""
+        />
+        <img
+          src="../static/img/{{i+2}}.jpg"
+          class="w-100 shadow-1-strong rounded mb-4"
+          alt=""
+        />
+      </div>
+      
+    {%endfor%} 
+  
+  </div>
+
+ 
+
+    
+  
+
+ 
+  
+  
+  
 {% endblock %}
+
 
