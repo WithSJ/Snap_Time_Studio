@@ -1,7 +1,6 @@
 {% extends "layout.html"%}
 
 {% block content%}
-
     <h2 class="pb-2 border-bottom" style="font-family: 'Caveat', cursive;">Photography</h2>
     
     <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
@@ -9,14 +8,23 @@
     
         <div class="col">
           <div class="img-card shadow-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="stack-1 bi bi-heart-fill btm-left" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-            </svg>
+           
+            <a href="" style="color:rgba(29, 27, 27, 0.938);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="stack-1 bi bi-heart-fill btm-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+              </svg>
+            </a>
+            
+            
             <span class=" stack-1 btm-left">Like 1</span>
 
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="stack-1 bi bi-share-fill btm-right" viewBox="0 0 16 16">
-              <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
-            </svg>
+            
+            <a href="" style="color:rgba(29, 27, 27, 0.938);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="stack-1 bi bi-share-fill btm-right" viewBox="0 0 16 16">
+                <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
+              </svg>
+            </a>
+            
             
             <a href="../static/img/{{i}}.jpg" data-lightbox="image-1" data-title="My caption">
               <img src="../static/img/{{i}}.jpg" alt="">
