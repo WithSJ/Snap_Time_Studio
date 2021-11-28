@@ -1,3 +1,22 @@
+.video-card{
+    width: auto;
+    /* padding-top: 56.25%; */
+    height: 112.50%;
+    overflow: hidden;
+    position: relative;
+    transform: scale(1);
+    transition: all 0.3s ease-out;
+
+}
+
+.video-card:hover {
+    transform:  scale(1.3) translateY(-20px);
+    z-index: 9;
+    
+    
+    
+}
+
 .img-card{
     width: auto;
     height: 300px;
