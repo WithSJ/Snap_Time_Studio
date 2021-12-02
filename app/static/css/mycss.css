@@ -19,7 +19,7 @@
 
 .img-card{
     width: auto;
-    height: 300px;
+    height: auto;
     background: radial-gradient(#fffafa 50%,#fffafa 100%);
     overflow: hidden;
     position: relative;
