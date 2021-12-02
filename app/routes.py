@@ -18,3 +18,7 @@ def about():
 @app.route("/book_a_session")
 def book_a_session():
     return render_template("book_a_session.html", title="Book A Session")
+
+@app.route("/signup")
+def signup():
+    return render_template("signup.html", title="Sign up")
