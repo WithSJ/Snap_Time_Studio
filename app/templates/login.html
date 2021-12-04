@@ -8,12 +8,11 @@
         <div class=" col-lg-4 border shadow p-5  bg-white rounded">
             <form class="form-signin" action="" method="POST">
                 {{ form.hidden_tag() }}
-                 
-                <fieldset class="form-group">
-
-                    <legend class="h1 font-weight-normal" >Sign up</legend>
+                 <fieldset class="form-group">
                     
+                    <legend class="h1 font-weight-normal" >Log in</legend>
                     
+                
                     {% if form.email.errors %}
                         {{ form.email(class="form-control form-control-md mb-2 is-invalid",placeholder="Email address")}}
                         <div class="invalid-feedback">
@@ -23,23 +22,7 @@
                         </div>
                     {% else %}
                         {{ form.email(class="form-control form-control-md mb-2 ",placeholder="Email address")}}
-                    {% endif %}    
-                
-
-
-                
-                    {% if form.fullname.errors %}
-                        {{form.fullname(class="form-control form-control-md mb-2 is-invalid",placeholder="Full Name")}}
-                        <div class="invalid-feedback">
-                        {% for error in form.fullname.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                        </div>
-                    {% else%}
-                        {{form.fullname(class="form-control form-control-md mb-2 ",placeholder="Full Name")}}
-                    {% endif %}    
-                
-
+                    {% endif %}      
                 
                     {% if form.password.errors %}
                         {{form.password(class="form-control form-control-md mb-2 is-invalid",placeholder="Password")}}
@@ -51,16 +34,13 @@
                     {% else%}
                         {{form.password(class="form-control form-control-md mb-2 ",placeholder="Password")}}
                     {% endif %}    
-                
-                
-            
-                
-                                    
+                            
                 </fieldset>
                 {{form.submit(class="btn btn-md btn-primary btn-block")}}
                 <hr>
-                <p class="mt-4" >Have an account? <a href="{{url_for('login')}}">Log in</a> </p> 
-            
+                <a href="#">Forgot password?</a>
+                <p class="mt-4" >Don't have an account? <a href="{{url_for('signup')}}">Sign up</a> </p> 
+                
             </form>
         </div>         
     
