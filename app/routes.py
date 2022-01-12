@@ -1,11 +1,11 @@
 from flask import render_template,flash,redirect,url_for
-from app import firebase
+#from app import firebase
 from app.forms import SignupForm,LoginForm
-from app.firebase import config
+#from app.firebase import config
 
 from app import app
 
-firebase = config.firebase
+#firebase = config.firebase
 
 @app.route("/")
 @app.route("/photography")
