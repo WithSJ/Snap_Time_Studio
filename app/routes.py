@@ -1,11 +1,13 @@
+from logging import error
 from flask import render_template,flash,redirect,url_for
-#from app import firebase
+from app import firebase
+from app.firebase.authentication import SignUp,Login
 from app.forms import SignupForm,LoginForm
-#from app.firebase import config
+from app.firebase import config
 
 from app import app
 
-#firebase = config.firebase
+firebase = config.firebase
 
 @app.route("/")
 @app.route("/photography")
@@ -27,22 +29,32 @@ def book_a_session():
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
     form = SignupForm()
-    if form.validate_on_submit():
-        print("asdadasdasd")
-        # auth = firebase.auth()
-        # token = auth.create_user_with_email_and_password(
-        #     form.email.data,
-        #     form.password.data
-        #     )
-        # print(token)
-        # auth.send_email_verification(token["tokenID"])
+    print("SIGNUP")
+    if form.submit.data == True:
+        isError=SignUp(
+            form.email.data,form.password.data,
+            form.username.data,form.fullname.data
+            )
+        if isError["ERROR"]:
+            # print(isError["MESSAGE"])
+            flash(isError["MESSAGE"],"danger")
+        else:
+            flash(isError["MESSAGE"],"success")
+
+            
     return render_template("signup.html",title="Sign up",form=form)
 
 @app.route("/login",methods=['GET','POST'])
 def login():
     form = LoginForm()
-    if form.validate_on_submit():
-        
-        print(f"{form.email.data} you are log in now...","success")
+    
+    if form.submit.data == True:
+        isError=Login(form.email.data,form.password.data)
+        if isError["ERROR"]:
+            
+            flash(isError["MESSAGE"],"danger")
+        else:
+            flash(isError["MESSAGE"],"success")
+
         redirect(url_for('login'))
     return render_template("login.html",title="Log in",form=form)
