@@ -1,8 +1,8 @@
 from logging import error
 from flask import render_template,flash,redirect,url_for
 from app import firebase
-from app.firebase.authentication import SignUp,Login
-from app.forms import SignupForm,LoginForm
+from app.firebase.authentication import SignUp,Login,PasswordReset
+from app.forms import SignupForm,LoginForm,ForgotForm
 from app.firebase import config
 
 from app import app
@@ -47,14 +47,25 @@ def signup():
 @app.route("/login",methods=['GET','POST'])
 def login():
     form = LoginForm()
-    
+    forgot_form=ForgotForm()
+
     if form.submit.data == True:
         isError=Login(form.email.data,form.password.data)
         if isError["ERROR"]:
             
             flash(isError["MESSAGE"],"danger")
         else:
-            flash(isError["MESSAGE"],"success")
+            flash(isError["MESSAGE"],"secondary")
 
-        redirect(url_for('login'))
-    return render_template("login.html",title="Log in",form=form)
+        # redirect(url_for('login'))
+    
+    if forgot_form.reset.data == True:
+        isError = PasswordReset(forgot_form.email.data)
+        if isError["ERROR"]:
+            
+            flash(isError["MESSAGE"],"danger")
+        else:
+            flash(isError["MESSAGE"],"secondary")
+
+
+    return render_template("login.html",title="Log in",form=form,forgot_form=forgot_form)
