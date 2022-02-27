@@ -22,6 +22,10 @@ def videography():
 def about():
     return render_template("about.html", title="About")
 
+@app.route("/admin")
+def admin():
+    return render_template("admin_pannel.html", title="Admin")
+
 @app.route("/book_a_session")
 def book_a_session():
     return render_template("book_a_session.html", title="Book A Session")
