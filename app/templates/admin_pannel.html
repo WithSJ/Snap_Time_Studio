@@ -48,45 +48,45 @@
       <div class="position-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" onclick="showEle(1)" aria-current="page" href="#">
-              <span data-feather="home"></span>
+            <a class="nav-link" id="dasBTN" onclick="showEle(1)" aria-current="page" href="#">
+              
               Dashboard
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" onclick="showEle(2)">
-              <span data-feather="file"></span>
+            <a class="nav-link" id="ordBTN" href="#" onclick="showEle(2)">
+              
               Orders
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" onclick="showEle(3)">
-              <span data-feather="shopping-cart"></span>
-              Products
+            <a class="nav-link" id="phoBTN" href="#" onclick="showEle(3)">
+              
+              Photography
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="users"></span>
-              Customers
+            <a class="nav-link" id="vidBTN" href="#" onclick="showEle(4)">
+              
+              Videography
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="bar-chart-2"></span>
-              Reports
+            <a class="nav-link" id="booBTN" href="#" onclick="showEle(5)">
+              
+              Book a Session
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="layers"></span>
-              Integrations
+            <a class="nav-link" id="aboBTN" href="#" onclick="showEle(6)">
+              
+              About
             </a>
           </li>
         </ul>
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>Saved reports</span>
+          <span>Technical And Marketing </span>
           <a class="link-secondary" href="#" aria-label="Add a new report">
             <span data-feather="plus-circle"></span>
           </a>
@@ -124,20 +124,40 @@
       
       
       <div id="dashboard">
-            <h1>dashboard</h1>
+            <h1>Dashboard</h1>
   
         </div>
       
 
         <div id="orders">
-            <h1>orders</h1>
+            <h1>Orders</h1>
   
         </div>
         
-        <div id="products">
-            <h1>products</h1>
+        <div id="photography">
+            <h1>Photography</h1>
   
         </div>
+
+        <div id="videography">
+          <h1>Videography</h1>
+
+      </div>
+
+      <div id="book_a_session">
+        <h1>Book a Session</h1>
+  
+      </div>
+      
+      <div id="about">
+        <h1>About</h1>
+
+      </div>
+
+    
+
+
+  </div>
 
         
     </main>
@@ -150,8 +170,11 @@
     {
       document.getElementById("dashboard").style.display="none";
       document.getElementById("orders").style.display="none";
-      document.getElementById("products").style.display="none";
-    
+      document.getElementById("photography").style.display="none";
+      document.getElementById("videography").style.display="none";
+      document.getElementById("about").style.display="none";
+      document.getElementById("book_a_session").style.display="none";
+      
     }
     
     hideEle();
@@ -160,14 +183,22 @@
         hideEle();  
         
         if(a==1)
-            document.getElementById("dashboard").style.display="block";
-        
+          document.getElementById("dashboard").style.display="block";
+          
         if(a==2)
-            document.getElementById("orders").style.display="block";
-        
+          document.getElementById("orders").style.display="block";
+          
         if(a==3)
-            document.getElementById("products").style.display="block";
+          document.getElementById("photography").style.display="block";
         
+        if(a==4)
+          document.getElementById("videography").style.display="block";
+        
+        if(a==5)
+          document.getElementById("book_a_session").style.display="block";    
+        
+        if(a==6)
+          document.getElementById("about").style.display="block";  
 
         
     }
