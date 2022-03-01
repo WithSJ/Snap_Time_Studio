@@ -1,69 +1,68 @@
 {% extends "layout.html" %}
 {% block content %}
-
-<div class="text-center container mt-md-5 mt-lg-5" >
-    
+<div class="text-center container mt-md-5 mt-lg-5">
     <div class="row">
-        
         <div class=" col-lg-4 border shadow p-5  bg-white rounded">
             <form class="form-signin" action="" method="POST">
                 {{ form.hidden_tag() }}
-                 <fieldset class="form-group">
-                    
-                    <legend style="font-family: 'Cinzel', serif; " >Log in</legend>
+                <fieldset class="form-group">
+                    <legend style="font-family: 'Cinzel', serif; ">Log in</legend>
                     {{ form.email(class="form-control form-control-md mb-2 ",placeholder="Email address")}}
                     
                     
                     {{form.password(class="form-control form-control-md mb-2 ",placeholder="Password")}}
-                    
                 </fieldset>
                 {{form.submit(class="btn btn-md btn-primary btn-block")}}
                 <hr>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Forgot password?</a>
-                <p class="mt-4" >Don't have an account? <a href="{{url_for('signup')}}">Sign up</a> </p> 
-                
+                <a
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    data-bs-whatever="@mdo"
+                >Forgot password?</a>
+                <p class="mt-4">Don't have an account?
+                    <a href="{{url_for('signup')}}">Sign up</a>
+                </p>
             </form>
-
-        </div>         
-    
-    </div>    
+        </div>
+    </div>
 </div>
-
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Forgot password?</h5>
-                <button type="button" class="close btn" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                <button
+                    type="button"
+                    class="close btn"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-        
                 <form action="" method="POST">
                     {{ forgot_form.hidden_tag() }}
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Email:</label>
-                        
-                        {{ forgot_form.email(class="form-control form-control-md mb-2 ",placeholder="Email address")}} 
-                    
+                        {{ forgot_form.email(class="form-control form-control-md mb-2 ",placeholder="Email address")}}
                     </div>
-                    
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         {{forgot_form.reset(class="btn btn-md btn-primary btn-block")}}
                         <!-- <button type="button" class="btn btn-primary">Reset</button> -->
                     </div>
-                
                 </form>
-      
             </div>
-      
-            
         </div>
     </div>
 </div>
-    
-
 {% endblock content %}

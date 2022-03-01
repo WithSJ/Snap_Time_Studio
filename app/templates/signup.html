@@ -1,26 +1,19 @@
 {% extends "layout.html" %}
 {% block content %}
-
-<div class="text-center container mt-md-5 mt-lg-5" >
-    
+<div class="text-center container mt-md-5 mt-lg-5">
     <div class="row">
-        
         <div class=" col-lg-4 border shadow p-5  bg-white rounded">
             <form class="form-signin" action="" method="POST">
                 {{ form.hidden_tag() }}
-                 
                 <fieldset class="form-group">
-
-                    <legend style="font-family: 'Cinzel', serif; "  >Sign up</legend>
-                    
-                    
+                    <legend style="font-family: 'Cinzel', serif; ">Sign up</legend>
                     {% if form.email.errors %}
                         {{ form.email(class="form-control form-control-md mb-2 is-invalid",placeholder="Email address")}}
-                        <div class="invalid-feedback">
+                    <div class="invalid-feedback">
                         {% for error in form.email.errors %}
-                            <span>{{ error }}</span>
+                        <span>{{ error }}</span>
                         {% endfor %}
-                        </div>
+                    </div>
                     {% else %}
                         {{ form.email(class="form-control form-control-md mb-2 ",placeholder="Email address")}}
                     {% endif %}    
@@ -30,11 +23,11 @@
                 
                     {% if form.fullname.errors %}
                         {{form.fullname(class="form-control form-control-md mb-2 is-invalid",placeholder="Full Name")}}
-                        <div class="invalid-feedback">
+                    <div class="invalid-feedback">
                         {% for error in form.fullname.errors %}
-                            <span>{{ error }}</span>
+                        <span>{{ error }}</span>
                         {% endfor %}
-                        </div>
+                    </div>
                     {% else%}
                         {{form.fullname(class="form-control form-control-md mb-2 ",placeholder="Full Name")}}
                     {% endif %}    
@@ -43,30 +36,22 @@
                 
                     {% if form.password.errors %}
                         {{form.password(class="form-control form-control-md mb-2 is-invalid",placeholder="Password")}}
-                        <div class="invalid-feedback">
+                    <div class="invalid-feedback">
                         {% for error in form.password.errors %}
-                            <span>{{ error }}</span>
+                        <span>{{ error }}</span>
                         {% endfor %}
-                        </div>
+                    </div>
                     {% else%}
                         {{form.password(class="form-control form-control-md mb-2 ",placeholder="Password")}}
-                    {% endif %}    
-                
-                
-            
-                
-                                    
+                    {% endif %}
                 </fieldset>
                 {{form.submit(class="btn btn-md btn-primary btn-block")}}
                 <hr>
-                <p class="mt-4" >Have an account? <a href="{{url_for('login')}}">Log in</a> </p> 
-            
+                <p class="mt-4">Have an account?
+                    <a href="{{url_for('login')}}">Log in</a>
+                </p>
             </form>
-        </div>         
-    
+        </div>
     </div>
-    
-    
 </div>
-
 {% endblock content %}
