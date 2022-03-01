@@ -1,8 +1,8 @@
 from logging import error
-from flask import render_template,flash,redirect,url_for
+from flask import render_template,flash,request,make_response,redirect,url_for
 from app import firebase
 from app.firebase.authentication import SignUp,Login,PasswordReset
-from app.forms import SignupForm,LoginForm,ForgotForm
+from app.forms import SignupForm,LoginForm,ForgotForm,PhotoUploadForm
 from app.firebase import config
 
 from app import app
@@ -24,7 +24,11 @@ def about():
 
 @app.route("/admin")
 def admin():
-    return render_template("admin_pannel.html", title="Admin")
+    form = dict()
+    form["photoUploadForm"]=PhotoUploadForm()
+    return render_template(
+        "admin_pannel.html", title="Admin",form=form
+    )
 
 @app.route("/book_a_session")
 def book_a_session():
@@ -48,8 +52,12 @@ def signup():
             
     return render_template("signup.html",title="Sign up",form=form)
 
-@app.route("/login",methods=['GET','POST'])
+@app.route("/login",methods=['POST','GET'])
 def login():
+
+    # userID = request.cookies.get("userID")
+    # if userID != None :
+    #     print(userID)
     form = LoginForm()
     forgot_form=ForgotForm()
 
@@ -60,6 +68,9 @@ def login():
             flash(isError["MESSAGE"],"danger")
         else:
             flash(isError["MESSAGE"],"secondary")
+            # webResp = make_response(redirect("photography"))
+            # webResp.set_cookie("userID","#Admin")
+            # return  webResp
 
         # redirect(url_for('login'))
     
