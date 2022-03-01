@@ -2,7 +2,7 @@ from logging import error
 from flask import render_template,flash,request,make_response,redirect,url_for
 from app import firebase
 from app.firebase.authentication import SignUp,Login,PasswordReset
-from app.forms import SignupForm,LoginForm,ForgotForm,PhotoUploadForm
+from app.forms import SignupForm,LoginForm,ForgotForm,PhotoUploadForm,VideoUploadForm
 from app.firebase import config
 
 from app import app
@@ -26,6 +26,9 @@ def about():
 def admin():
     form = dict()
     form["photoUploadForm"]=PhotoUploadForm()
+    form["videoAddForm"]= VideoUploadForm()
+    
+    
     return render_template(
         "admin_pannel.html", title="Admin",form=form
     )

@@ -21,7 +21,7 @@ class ForgotForm(FlaskForm):
     email = StringField('Email',validators=[DataRequired(),Email()])
     reset = SubmitField('Reset')
 
-class PhotoUploadForm(LoginForm):
+class PhotoUploadForm(FlaskForm):
     title = StringField('Title',validators=[DataRequired(),Length(min=5,max=60)])
     day = SelectField('Day',choices=[_ for _ in range(1,32)])
     month = SelectField('Month',choices=[_ for _ in range(1,13)])
@@ -30,6 +30,10 @@ class PhotoUploadForm(LoginForm):
     photo = FileField("Image")
     submit = SubmitField('Upload')
     
+class VideoUploadForm(FlaskForm):
+    title = StringField('Title',validators=[DataRequired(),Length(min=5,max=60)])
+    videoUrl = StringField('URL',validators=[DataRequired()])
+    submit = SubmitField('Add Video')
 
 
 
