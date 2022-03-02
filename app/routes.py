@@ -6,6 +6,7 @@ from app.forms import SignupForm,LoginForm,ForgotForm,PhotoUploadForm,VideoUploa
 from app.firebase import config
 
 from app import app
+from datetime import date, datetime
 
 firebase = config.firebase
 
@@ -22,15 +23,42 @@ def videography():
 def about():
     return render_template("about.html", title="About")
 
-@app.route("/admin")
+@app.route("/admin",methods=['GET', 'POST'])
 def admin():
     form = dict()
     form["photoUploadForm"]=PhotoUploadForm()
     form["videoAddForm"]= VideoUploadForm()
+    adminTab = {"TabNumber":1}
+    
+    if form["photoUploadForm"].submit.data == True:
+        photo = form["photoUploadForm"].photo.data
+        photoTitle = form["photoUploadForm"].title.data
+        
+        # GEt Date
+        if form["photoUploadForm"].autodate.data == True:
+            dateTime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        else:
+            dateTime = str(
+                form["photoUploadForm"].year.data) + "-"+ str(
+                form["photoUploadForm"].month.data) +"-"+ str(
+                form["photoUploadForm"].day.data)
+        # End Geting Date
+        
+        
+        dataSet = {
+            "photoTitle":photoTitle,
+                "photo":photo,
+            "dateTime":dateTime,}
+        
+        print(dataSet)
+        
+        adminTab = {"TabNumber":3}
+        
+
     
     
     return render_template(
-        "admin_pannel.html", title="Admin",form=form
+        "admin_pannel.html", title="Admin",form=form,adminTab=adminTab
     )
 
 @app.route("/book_a_session")
