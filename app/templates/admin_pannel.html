@@ -240,13 +240,14 @@
 
                     <div id="videography">
                         <h1>Videography</h1>
-
+                        <form method="POST" enctype="multipart/form-data">
                         {{ form["videoAddForm"].hidden_tag() }}
 
                         {{form["videoAddForm"].title(class="form-control form-control-md mb-3",placeholder="Title")}}
                         {{form["videoAddForm"].videoUrl(class="form-control form-control-md mb-3",placeholder="URL")}}
-                        {{form["videoAddForm"].submit(class="btn btn-md btn-primary btn-block")}}
-                        
+                        {{form["videoAddForm"].submit(class="btn btn-md btn-primary btn-block") }}
+                        <hr>
+                        </form>
 
                         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 align-items-stretch g-4 py-5">
                           {% for i in range(1,11) %}

@@ -52,10 +52,28 @@ def admin():
         
         print(dataSet)
         
-        adminTab = {"TabNumber":3}
-        
+        # adminTab = {"TabNumber":3}
+        return render_template(
+            "admin_pannel.html", title="Admin",form=form,adminTab=adminTab
+        )
 
     
+    if form["videoAddForm"].submit.data == True:
+        videoTitle = form["videoAddForm"].title.data
+        videoUrl = form["videoAddForm"].videoUrl.data
+
+        dataSet = {
+            "videoTitle":videoTitle,
+            "videoUrl" : videoUrl
+        }
+        print(dataSet)
+
+        # adminTab = {"TabNumber":4}
+        return render_template(
+            "admin_pannel.html", title="Admin",form=form,adminTab=adminTab
+        )
+
+
     
     return render_template(
         "admin_pannel.html", title="Admin",form=form,adminTab=adminTab
