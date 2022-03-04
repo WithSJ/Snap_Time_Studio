@@ -4,16 +4,20 @@ from app import firebase
 from app.firebase.authentication import SignUp,Login,PasswordReset
 from app.forms import SignupForm,LoginForm,ForgotForm,PhotoUploadForm,VideoUploadForm
 from app.firebase import config
+from app.database import post_new_photo,get_all_photos
 
 from app import app
-from datetime import date, datetime
+from datetime import datetime
+import time
 
 firebase = config.firebase
 
 @app.route("/")
 @app.route("/photography")
 def photography():
-    return render_template("photography.html", title="Photography")
+
+    allPhotos = get_all_photos()
+    return render_template("photography.html", title="Photography",allPhotos=allPhotos)
 
 @app.route("/videography")
 def videography():
@@ -45,16 +49,20 @@ def admin():
         # End Geting Date
         
         
-        dataSet = {
-            "photoTitle":photoTitle,
-                "photo":photo,
-            "dateTime":dateTime,}
+        # dataSet = {
+        #     "photoTitle":photoTitle,
+        #         "photo":photo,
+        #     "dateTime":dateTime,}
         
-        print(dataSet)
+        post_new_photo(
+            id= str(time.time()).replace(".",""),
+            title= photoTitle,dateTime=dateTime,image=photo)
         
-        # adminTab = {"TabNumber":3}
+        allPhotos = get_all_photos()
+        adminTab = {"TabNumber":3}
         return render_template(
-            "admin_pannel.html", title="Admin",form=form,adminTab=adminTab
+            "admin_pannel.html", title="Admin",form=form,adminTab=adminTab,
+            allPhotos = allPhotos
         )
 
     
@@ -74,9 +82,11 @@ def admin():
         )
 
 
-    
+    allPhotos = get_all_photos()
+
     return render_template(
-        "admin_pannel.html", title="Admin",form=form,adminTab=adminTab
+        "admin_pannel.html", title="Admin",form=form,adminTab=adminTab,
+        allPhotos=allPhotos
     )
 
 @app.route("/book_a_session")

@@ -223,13 +223,13 @@
                     </form>
 
                         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 align-items-stretch g-4 py-5" data-masonry='{"percentPosition": true }'>
-                          {% for i in range(1,11) %}
+                        {% for photo in allPhotos %}
                           <div class="col">
                               <div class="img-card shadow-lg">
                                   
-                                  <a href="../static/img/{{i}}.jpg" data-lightbox="image-1" data-title="My caption">
-                                      <img src="../static/img/{{i}}.jpg" alt="">
-                                  </a>
+                                <a href="../static/Database/Photos/{{photo[3]}}" data-lightbox="image-1" data-title="{{photo[1]}}">
+                                    <img src="../static/Database/Photos/{{photo[3]}}" alt="">
+                                </a>
                               </div>
                           </div>
                           {% endfor %}

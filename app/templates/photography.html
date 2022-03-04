@@ -7,7 +7,7 @@
 
 
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 align-items-stretch g-4 py-5" data-masonry='{"percentPosition": true }'>
-    {% for i in range(1,11) %}
+    {% for photo in allPhotos %}
     <div class="col">
         <div class="img-card shadow-lg">
             <a href="" style="color:rgba(29, 27, 27, 0.938);">
@@ -35,8 +35,8 @@
                     <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
                 </svg>
             </a>
-            <a href="../static/img/{{i}}.jpg" data-lightbox="image-1" data-title="My caption">
-                <img src="../static/img/{{i}}.jpg" alt="">
+            <a href="../static/Database/Photos/{{photo[3]}}" data-lightbox="image-1" data-title="{{photo[1]}}">
+                <img src="../static/Database/Photos/{{photo[3]}}" alt="">
             </a>
         </div>
     </div>
