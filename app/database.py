@@ -8,7 +8,7 @@ def create_database():
                 (Id text,Title text, DateTime text, ImageName text, ImageTag text)''')
     
     cur.execute('''CREATE TABLE VideosLib
-                (Id text,Title text, VideoUrl text, VideoTag text)''')
+                (Id text,Title text,DateTime text, VideoUrl text, VideoTag text)''')
     
     cur.execute('''CREATE TABLE Accounts
                 (   Id text,
@@ -60,7 +60,34 @@ def get_all_photos():
 
     return allPhotos
 
+def post_new_video(id,title,dateTime,videoUrl,videoTag=None):
+    con = sqlite3.connect(DBPATH+'database.db')
+    cur = con.cursor()
     
+    cur.execute('''INSERT INTO VideosLib(Id,Title,DateTime,VideoUrl,videoTag)
+                    VALUES (:id,:title,:dateTime,:videoUrl, :videoTag)''',
+                    {
+                        "id":id,"title":title,"dateTime":dateTime,
+                        "videoUrl":videoUrl, "videoTag":videoTag
+                    })
+    
+    con.commit()
+    con.close()
+
+
+def get_all_videos():
+    con = sqlite3.connect(DBPATH+'database.db')
+    cur = con.cursor()
+    
+    cur.execute("SELECT * FROM VideosLib ORDER BY DateTime DESC")
+    allVideos = cur.fetchall()
+    con.commit()
+    con.close()
+
+    return allVideos
+    
+
+
 if __name__ == "__main__":
     create_database()
 

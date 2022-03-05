@@ -4,7 +4,7 @@ from app import firebase
 from app.firebase.authentication import SignUp,Login,PasswordReset
 from app.forms import SignupForm,LoginForm,ForgotForm,PhotoUploadForm,VideoUploadForm
 from app.firebase import config
-from app.database import post_new_photo,get_all_photos
+from app.database import post_new_photo,get_all_photos,get_all_videos,post_new_video
 
 from app import app
 from datetime import datetime
@@ -21,7 +21,8 @@ def photography():
 
 @app.route("/videography")
 def videography():
-    return render_template("videography.html", title="Videography")
+    allVideos = get_all_videos()
+    return render_template("videography.html", title="Videography",allVideos=allVideos)
 
 @app.route("/about")
 def about():
@@ -34,59 +35,67 @@ def admin():
     form["videoAddForm"]= VideoUploadForm()
     adminTab = {"TabNumber":1}
     
-    if form["photoUploadForm"].submit.data == True:
-        photo = form["photoUploadForm"].photo.data
-        photoTitle = form["photoUploadForm"].title.data
+    # if form["photoUploadForm"].submit.data == True:
+    #     photo = form["photoUploadForm"].photo.data
+    #     photoTitle = form["photoUploadForm"].title.data
         
-        # GEt Date
-        if form["photoUploadForm"].autodate.data == True:
-            dateTime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        else:
-            dateTime = str(
-                form["photoUploadForm"].year.data) + "-"+ str(
-                form["photoUploadForm"].month.data) +"-"+ str(
-                form["photoUploadForm"].day.data)
-        # End Geting Date
+    #     # GEt Date
+    #     if form["photoUploadForm"].autodate.data == True:
+    #         dateTime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    #     else:
+    #         dateTime = str(
+    #             form["photoUploadForm"].year.data) + "-"+ str(
+    #             form["photoUploadForm"].month.data) +"-"+ str(
+    #             form["photoUploadForm"].day.data)
+    #     # End Geting Date
         
         
-        # dataSet = {
-        #     "photoTitle":photoTitle,
-        #         "photo":photo,
-        #     "dateTime":dateTime,}
+    #     # dataSet = {
+    #     #     "photoTitle":photoTitle,
+    #     #         "photo":photo,
+    #     #     "dateTime":dateTime,}
         
-        post_new_photo(
-            id= str(time.time()).replace(".",""),
-            title= photoTitle,dateTime=dateTime,image=photo)
+    #     post_new_photo(
+    #         id= str(time.time()).replace(".",""),
+    #         title= photoTitle,dateTime=dateTime,image=photo)
         
-        allPhotos = get_all_photos()
-        adminTab = {"TabNumber":3}
-        return render_template(
-            "admin_pannel.html", title="Admin",form=form,adminTab=adminTab,
-            allPhotos = allPhotos
-        )
+    #     allPhotos = get_all_photos()
+    #     adminTab = {"TabNumber":3}
+    #     return render_template(
+    #         "admin_pannel.html", title="Admin",form=form,adminTab=adminTab,
+    #         allPhotos = allPhotos
+    #     )
 
     
     if form["videoAddForm"].submit.data == True:
         videoTitle = form["videoAddForm"].title.data
         videoUrl = form["videoAddForm"].videoUrl.data
 
-        dataSet = {
-            "videoTitle":videoTitle,
-            "videoUrl" : videoUrl
-        }
-        print(dataSet)
+        # dataSet = {
+        #     "videoTitle":videoTitle,
+        #     "videoUrl" : videoUrl
+        # }
+        dateTime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        post_new_video(
+            id= str(time.time()).replace(".",""),
+            title=videoTitle,
+            dateTime=dateTime,
+            videoUrl=videoUrl)
 
-        # adminTab = {"TabNumber":4}
+        allVideos = get_all_videos()
+        adminTab = {"TabNumber":4}
+
         return render_template(
-            "admin_pannel.html", title="Admin",form=form,adminTab=adminTab
-        )
+            "admin_pannel.html", title="Admin",form=form,adminTab=adminTab,
+            allVideos = allVideos)
 
 
     allPhotos = get_all_photos()
+    allVideos = get_all_videos()
 
     return render_template(
         "admin_pannel.html", title="Admin",form=form,adminTab=adminTab,
-        allPhotos=allPhotos
+        allPhotos=allPhotos,allVideos=allVideos
     )
 
 @app.route("/book_a_session")
