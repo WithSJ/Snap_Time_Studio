@@ -121,12 +121,12 @@ def login():
     forgot_form=ForgotForm()
 
     if form.submit.data == True:
-        isError=Login(form.email.data,form.password.data)
-        if isError["ERROR"]:
+        loginResp=Login(form.email.data,form.password.data)
+        if loginResp["ERROR"]:
             
-            flash(isError["MESSAGE"],"danger")
+            flash(loginResp["MESSAGE"],"danger")
         else:
-            flash(isError["MESSAGE"],"secondary")
+            flash(loginResp["MESSAGE"],"secondary")
             # webResp = make_response(redirect("photography"))
             # webResp.set_cookie("userID","#Admin")
             # return  webResp
@@ -134,12 +134,12 @@ def login():
         # redirect(url_for('login'))
     
     if forgot_form.reset.data == True:
-        isError = PasswordReset(forgot_form.email.data)
-        if isError["ERROR"]:
+        resetResp = PasswordReset(forgot_form.email.data)
+        if resetResp["ERROR"]:
             
-            flash(isError["MESSAGE"],"danger")
+            flash(resetResp["MESSAGE"],"danger")
         else:
-            flash(isError["MESSAGE"],"secondary")
+            flash(resetResp["MESSAGE"],"secondary")
 
 
     return render_template("login.html",title="Log in",form=form,forgot_form=forgot_form)
