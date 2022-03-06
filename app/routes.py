@@ -1,5 +1,6 @@
 from logging import error
-from flask import render_template,flash,request,make_response,redirect,url_for
+from syslog import LOG_INFO
+from flask import render_template,flash,request,make_response,redirect, session,url_for
 from app import firebase
 from app.firebase.authentication import SignUp,Login,PasswordReset
 from app.forms import SignupForm,LoginForm,ForgotForm,PhotoUploadForm,VideoUploadForm
@@ -9,7 +10,7 @@ from app.database import post_new_photo,get_all_photos,get_all_videos,post_new_v
 from app import app
 from datetime import datetime
 import time
-
+from random import randint
 firebase = config.firebase
 
 @app.route("/")
@@ -85,18 +86,62 @@ def login():
 
 
 
+def get_admin_key():
+    AdminKey = hex(randint(0,9**64))[2:]
+    return AdminKey
+
+EMAIL = "jadamsandeep2000@gmail.com"
+PASS = "qwerty2000"
+
+@app.route("/admin",methods=['GET', 'POST'])
+def admin_login():
+    ak = request.cookies.get("_a.k_")
+    if "_a.k_" in session:
+        if ak == session["_a.k_"]:
+            return redirect("/admin/dashboard")
+
+
+    form = LoginForm()
+
+    if form.submit.data == True:
+        if form.email.data == EMAIL and form.password.data == PASS:
+            
+            AdminKey = get_admin_key()
+            session["_a.k_"] = AdminKey
+            resp = make_response(redirect("/admin/dashboard"))
+            resp.set_cookie("_a.k_",AdminKey)
+            return resp
+
+
+        
+
+
+    return render_template("admin_pannel_login.html", title="Admin",form=form)
 
 
 @app.route("/admin/dashboard")
-@app.route("/admin")
 def admin_dashboard():
-    
+    ak = request.cookies.get("_a.k_")
+    if "_a.k_" not in session:
+        return redirect("/admin")
+    else:
+        if ak != session["_a.k_"]:
+            return redirect("/admin")
+
+        
     return render_template("admin_pannel_dashboard.html", title="Admin")
 
 
 
 @app.route("/admin/photos",methods=['GET', 'POST'])
 def admin_photos():
+    ak = request.cookies.get("_a.k_")
+    if "_a.k_" not in session:
+        return redirect("/admin")
+    else:
+        if ak != session["_a.k_"]:
+            return redirect("/admin")
+
     form=PhotoUploadForm()
     
     if form.submit.data == True:
@@ -126,7 +171,13 @@ def admin_photos():
 
 @app.route("/admin/videos",methods=['GET', 'POST'])
 def admin_videos():
-    
+    ak = request.cookies.get("_a.k_")
+    if "_a.k_" not in session:
+        return redirect("/admin")
+    else:
+        if ak != session["_a.k_"]:
+            return redirect("/admin")
+
     form= VideoUploadForm()
         
     if form.submit.data == True:
@@ -145,3 +196,12 @@ def admin_videos():
     return render_template(
         "admin_pannel_videos.html", title="Admin",form=form,allVideos=allVideos
     )
+
+
+
+@app.route("/admin/signout",methods=['GET', 'POST'])
+def admin_signout():
+    if "_a.k_" in session:
+        session.pop("_a.k_",None)
+        return redirect("/")
+    
