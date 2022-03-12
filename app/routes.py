@@ -3,10 +3,11 @@ from syslog import LOG_INFO
 from flask import render_template,flash,request,make_response,redirect, session,url_for
 from app import firebase
 from app.firebase.authentication import SignUp,Login,PasswordReset
-from app.forms import SignupForm,LoginForm,ForgotForm,PhotoUploadForm,VideoUploadForm
+from app.forms import (SignupForm,LoginForm,
+ForgotForm,PhotoUploadForm,VideoUploadForm,SelectBooking)
 from app.firebase import config
 from app.database import post_new_photo,get_all_photos,get_all_videos,post_new_video
-
+from app.util import get_month_days
 from app import app
 from datetime import datetime
 import time
@@ -29,9 +30,16 @@ def videography():
 def about():
     return render_template("about.html", title="About")
 
-@app.route("/book_a_session")
+@app.route("/book_a_session", methods=['GET', 'POST'])
 def book_a_session():
-    return render_template("book_a_session.html", title="Book A Session")
+    days = get_month_days()
+    today = str(datetime.today()).split()[0]
+    form=SelectBooking()
+    if form.submit.data == True:
+        print(form.date.data)
+        print(form.time.data)
+    return render_template("book_a_session.html", title="Book A Session",
+    days=days,today=today,form=form)
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
@@ -90,7 +98,7 @@ def get_admin_key():
     AdminKey = hex(randint(0,9**64))[2:]
     return AdminKey
 
-EMAIL = "jadamsandeep2000@gmail.com"
+EMAIL = "StudioAdmin"
 PASS = "qwerty2000"
 
 @app.route("/admin",methods=['GET', 'POST'])
