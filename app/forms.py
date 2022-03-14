@@ -37,8 +37,12 @@ class VideoUploadForm(FlaskForm):
 
 
 
-class SelectBooking(FlaskForm):
+class SelectBookingDateTime(FlaskForm):
     date = StringField('Date',validators=[DataRequired()])
     time = StringField('Time',validators=[DataRequired()])
     submit = SubmitField('Book Now')
-    
+
+class SelectBookingPlan(FlaskForm):
+    inStudio = SubmitField('Book Now')
+    outStudio = SubmitField('Book Now')
+    events = SubmitField('Book Now')

@@ -1,210 +1,68 @@
 {% extends "layout.html"%}
 
 {% block content%}
-<style>
-  .calendarSelect:focus{
-    background-color: cadetblue;
-  }
-  
-</style>
-<div class="container">
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 align-items-stretch" >
-
-    <div class="col">
-      <div class="container">
-        <h1>Date</h1>
-        <h3>{{today.split("-")[0]}}</h3>
-         <div class="row text-center">
-           <div class="col"><Button class="btn">Back</Button></div>
-           <div class="col" id="monthText">March </div>
-           <div class="col"><Button class="btn" >Next</Button></div>
-         </div> 
-        
-         
-        <table class="table  table-bordered  ">
-          <thead>
-            <tr>
-              
-              <th scope="col">Mon</th>
-              <th scope="col">Tue</th>
-              <th scope="col">Wed</th>
-              <th scope="col">Thu</th>
-              <th scope="col">Fri</th>
-              <th scope="col">Sat</th>
-              <th scope="col">Sun</th>
-            </tr>
-          </thead>
-          
-
-          <script>
-            // for  Calender
-            
-            function num_month(num){
-              switch(num)
-              {
-                case 1: return "Jan";
-                        break;
-                case 2: return "Feb"
-                        break;
-                case 3: return "Mar"
-                        break;
-                case 4: return "Apr"
-                        break;
-                case 5: return "Jun"
-                        break;
-                case 6: return "Jul"
-                        break;
-                case 7: return "Aug"
-                        break;
-                case 8: return "Sep"
-                        break;
-                case 9: return "Oct"
-                        break;
-                case 10: return "Nov"
-                        break;
-                case 11: return "Dec"
-                        break;
-                
-              
-              
-              }
-            }
-            function selectDate(mydate) {
-              document.getElementById("SelectDate").innerText= mydate;
-              document.getElementById("textDate").value = mydate;
-            }
-
-            function selectTime(mytime) {
-              document.getElementById("SelectTime").innerText= mytime;
-              document.getElementById("textTime").value= mytime;
-            }
-
-            document.getElementById("monthText").innerText= num_month({{today.split("-")[1]}}) ;
-            
-          </script>
-          
-          <tbody>
-            {% for day in days%}
-            <tr scope="row">
-              {% for date in day %}
-                {% if date == today%}
-                  <td style="padding: 0; "><button type="button" onclick="selectDate('{{date}}')" class="btn btn-outline-secondary" style="width: 100%;height: 100%; background-color:brown">{{date.split("-")[2]}}</button></td>
-                {% elif date.split("-")[0] <= today.split("-")[0] and date.split("-")[1] <= today.split("-")[1] and date.split("-")[2] < today.split("-")[2]%}
-                <td style="padding: 0; "><button type="button" disabled onclick="selectDate('{{date}}')" class="btn btn-outline-secondary" style="width: 100%;height: 100%; background-color:brown">{{date.split("-")[2]}}</button></td>
-                {% else %}
-                  <td style="padding: 0;"><button type="button" onclick="selectDate('{{date}}')" class="btn btn-outline-secondary calendarSelect" style="width: 100%;height: 100%;">{{date.split("-")[2]}}</button></td>
-                {% endif %}
-              {%endfor%}              
-              <tr>
-            {% endfor %}
-            
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="col">
-      <h1>Time</h1>
-      <div class="container">
-
-        <div class="row">
-          <div class="col"><Button onclick='selectTime("10:00 AM")' class="btn border-dark">10:00 AM</Button></div>
-          <div class="col"><Button class="btn border-dark">11:00 AM</Button></div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col"><Button class="btn border-dark">12:00 AM</Button></div>
-          <div class="col"><Button class="btn border-dark">01:00 PM</Button></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <h1>Select</h1>
-      <div class="container">
-        
-        <form class="form-signin" action="" method="POST">
-                {{ form.hidden_tag() }}
-                <h1 id="SelectDate"></h1>
-                <h1 id="SelectTime"></h1>
-
-                <fieldset class="form-group">
-                    
-                    {{ form.date(type="hidden",id="textDate", class="form-control form-control-md mb-2 ",placeholder="Email address")}}
-                    
-                    
-                    {{form.time(type="hidden",id="textTime",class="form-control form-control-md mb-2 ",placeholder="Password")}}
-                </fieldset>
-                {{form.submit(class="btn btn-md btn-primary btn-block")}}
-                
-            </form>
-
-        
-        
-      </div>
-      
-    </div>
-  </div>
-</div>
-
-
 <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
     <h1 class="display-4 fw-normal" style="font-family: 'Dancing Script', cursive;">{{title}}</h1>
     <p class="fs-5 text-muted">Quickly build an effective pricing table for your potential customers with this Bootstrap example.</p>
 </div>
+
+
+<form class="form-signin" action="" method="POST">
+  {{ form.hidden_tag() }}
+
+  
+
 <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
     <div class="col">
         <div class="card mb-4 rounded-3 shadow-sm">
-            <div class="card-header py-3">
-                <h4 class="my-0 fw-normal">Free</h4>
-            </div>
-            <div class="card-body">
-                <img src="../static/img/3.jpg" alt="..." class="img-thumbnail">
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>10 users included</li>
-                    <li>2 GB of storage</li>
-                    <li>Email support</li>
-                    <li>Help center access</li>
-                </ul>
-                <button type="button" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</button>
-            </div>
+            
+          <img src="../static/img/3.jpg" alt="..." class="img-thumbnail">
+          
+          <h2>Family Photography</h2>
+
+          <p>2 hr 30 min</p> 
+          <span>150 US dollars</span>
+          
+          {{form.inStudio(style="width: 40%;margin-left:30%; margin-bottom: 1rem;",class=" mt-5 btn active btn-lg btn-outline-secondary")}}
+
+            
         </div>
     </div>
+
     <div class="col">
-        <div class="card mb-4 rounded-3 shadow-sm">
-            <div class="card-header py-3">
-                <h4 class="my-0 fw-normal">Pro</h4>
-            </div>
-            <div class="card-body">
-                <img src="../static/img/5.jpg" alt="..." class="img-thumbnail">
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>20 users included</li>
-                    <li>10 GB of storage</li>
-                    <li>Priority email support</li>
-                    <li>Help center access</li>
-                </ul>
-                <button type="button" class="w-100 btn btn-lg btn-primary">Get started</button>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card mb-4 rounded-3 shadow-sm">
-            <div class="card-header py-3 ">
-                <h4 class="my-0 fw-normal">Enterprise</h4>
-            </div>
-            <div class="card-body">
-                <img src="../static/img/7.jpg" alt="..." class="img-thumbnail">
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>30 users included</li>
-                    <li>15 GB of storage</li>
-                    <li>Phone and email support</li>
-                    <li>Help center access</li>
-                </ul>
-                <button type="button" class="w-100 btn btn-lg btn-primary">Contact us</button>
-            </div>
-        </div>
+      <div class="card mb-4 rounded-3 shadow-sm">
+          
+        <img src="../static/img/7.jpg" alt="..." class="img-thumbnail">
+        
+        <h2>Family Photography</h2>
+
+        <p>2 hr 30 min</p> 
+        <span>150 US dollars</span>
+        
+        {{form.outStudio(style="width: 40%;margin-left:30%; margin-bottom: 1rem;",class=" mt-5 btn active btn-lg btn-outline-secondary")}}
+          
+      </div>
+  </div>
+
+  <div class="col">
+    <div class="card mb-4 rounded-3 shadow-sm">
+        
+      <img src="../static/img/5.jpg" alt="..." class="img-thumbnail">
+      
+      <h2>Family Photography</h2>
+
+      <p>2 hr 30 min</p> 
+      <span>150 US dollars</span>
+      
+      {{form.events(style="width: 40%;margin-left:30%; margin-bottom: 1rem;",class=" mt-5 btn active btn-lg btn-outline-secondary")}}
+        
     </div>
 </div>
+
+</div>
+
+</form>
+
 <!-- <h2 class="display-6 text-center mb-4">Compare plans</h2> -->
 <!-- <div class="table-responsive">
     <table class="table text-center">

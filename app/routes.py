@@ -4,7 +4,7 @@ from flask import render_template,flash,request,make_response,redirect, session,
 from app import firebase
 from app.firebase.authentication import SignUp,Login,PasswordReset
 from app.forms import (SignupForm,LoginForm,
-ForgotForm,PhotoUploadForm,VideoUploadForm,SelectBooking)
+ForgotForm,PhotoUploadForm,VideoUploadForm,SelectBookingDateTime,SelectBookingPlan)
 from app.firebase import config
 from app.database import post_new_photo,get_all_photos,get_all_videos,post_new_video
 from app.util import get_month_days
@@ -34,12 +34,27 @@ def about():
 def book_a_session():
     days = get_month_days()
     today = str(datetime.today()).split()[0]
-    form=SelectBooking()
-    if form.submit.data == True:
-        print(form.date.data)
-        print(form.time.data)
+    selectBookingPlan = SelectBookingPlan()
+    selectDateTimeForm = SelectBookingDateTime()
+
+     if selectDateTimeForm.submit.data == True:
+        print(selectDateTimeForm.date.data)
+        print(selectDateTimeForm.time.data)
+
+    if selectBookingPlan.inStudio.data == True:
+        print("InStudio")
+        return render_template("booking_calender.html", title="Book A Session",
+    days=days,today=today,form=selectDateTimeForm)
+    
+    
+    if selectBookingPlan.outStudio.data == True:
+        print("OutStudio")
+    
+    if selectBookingPlan.events.data == True:
+        print("Events")
+    
     return render_template("book_a_session.html", title="Book A Session",
-    days=days,today=today,form=form)
+    form=selectBookingPlan)
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
