@@ -37,9 +37,11 @@ def book_a_session():
     selectBookingPlan = SelectBookingPlan()
     selectDateTimeForm = SelectBookingDateTime()
 
-     if selectDateTimeForm.submit.data == True:
+    if selectDateTimeForm.submit.data == True:
         print(selectDateTimeForm.date.data)
         print(selectDateTimeForm.time.data)
+        return render_template("booking_checkout.html", title="Book A Session",)
+    
 
     if selectBookingPlan.inStudio.data == True:
         print("InStudio")
