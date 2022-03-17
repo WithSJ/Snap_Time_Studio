@@ -1,56 +1,51 @@
 {% extends "admin_pannel_layout.html"%}
 
 {% block content%}
-
 <div id="photography">
     <h1>Photography</h1>
     <form method="POST" enctype="multipart/form-data">
-    {{ form.hidden_tag() }}
+        {{ form.hidden_tag() }}
 
     {{form.title(class="form-control form-control-md mb-3",placeholder="Title")}}
-    <div class="row mb-2">
-        <div class="col">
-            {{ form.day.label(class="h5") }}
+        <div class="row mb-2">
+            <div class="col">
+                {{ form.day.label(class="h5") }}
             {{ form.day(class="custom-select",**{"onchange":"getCategories()"}) }}
-        </div>
-        <div class="col">
-            {{ form.month.label(class="h5") }}
+            </div>
+            <div class="col">
+                {{ form.month.label(class="h5") }}
             {{ form.month(class="custom-select",**{"onchange":"getCategories()"}) }}
-        </div>
-        <div class="col">
-            {{ form.year.label(class="h5") }}
+            </div>
+            <div class="col">
+                {{ form.year.label(class="h5") }}
             {{ form.year(class="custom-select",**{"onchange":"getCategories()"}) }}
+            </div>
         </div>
-    </div>
-    <div class="row mb-4 mt-2">
-        <div class="col">
-            {{form.autodate(class="custom-checkbox")}}
+        <div class="row mb-4 mt-2">
+            <div class="col">
+                {{form.autodate(class="custom-checkbox")}}
             {{form.autodate.label()}}
+            </div>
         </div>
-    </div>
-    <div class="row mb-4 mt-2">
-        <div class="col">
-            {{form.photo.label()}}
+        <div class="row mb-4 mt-2">
+            <div class="col">
+                {{form.photo.label()}}
             {{form.photo(class="form-control-file")}}
+            </div>
         </div>
-    </div>
-    {{form.submit(class="btn btn-md btn-primary btn-block")}}
-    <hr>
-</form>
-
+        {{form.submit(class="btn btn-md btn-primary btn-block")}}
+        <hr>
+    </form>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 align-items-stretch g-4 py-5" data-masonry='{"percentPosition": true }'>
-    {% for photo in allPhotos %}
-      <div class="col">
-          <div class="img-card shadow-lg">
-              
-            <a href="../static/Database/Photos/{{photo[3]}}" data-lightbox="image-1" data-title="{{photo[1]}}">
-                <img src="../static/Database/Photos/{{photo[3]}}" alt="">
-            </a>
-          </div>
-      </div>
-      {% endfor %}
-  </div>
-  
+        {% for photo in allPhotos %}
+        <div class="col">
+            <div class="img-card shadow-lg">
+                <a href="../static/Database/Photos/{{photo[3]}}" data-lightbox="image-1" data-title="{{photo[1]}}">
+                    <img src="../static/Database/Photos/{{photo[3]}}" alt="">
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
-
 {% endblock %}
