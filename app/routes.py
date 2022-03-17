@@ -1,37 +1,52 @@
-from logging import error
-from syslog import LOG_INFO
-from flask import render_template,flash,request,make_response,redirect, session,url_for
+from flask import Flask, render_template,request,flash,make_response,redirect, session,url_for
 from app import firebase
 from app.firebase.authentication import SignUp,Login,PasswordReset
 from app.forms import (SignupForm,LoginForm,
 ForgotForm,PhotoUploadForm,VideoUploadForm,SelectBookingDateTime,SelectBookingPlan)
 from app.firebase import config
 from app.database import post_new_photo,get_all_photos,get_all_videos,post_new_video
-from app.util import get_month_days
+from app.util import get_month_days, isLogin
 from app import app
 from datetime import datetime
 import time
 from random import randint
 firebase = config.firebase
 
+
 @app.route("/")
 @app.route("/photography")
 def photography():
+    LogedIn = isLogin()
+    
 
     allPhotos = get_all_photos()
-    return render_template("photography.html", title="Photography",allPhotos=allPhotos)
+    return render_template(
+        "photography.html", 
+        title="Photography",
+        allPhotos=allPhotos,
+        LogedIn = LogedIn)
 
 @app.route("/videography")
 def videography():
+    LogedIn = isLogin()
     allVideos = get_all_videos()
-    return render_template("videography.html", title="Videography",allVideos=allVideos)
+    return render_template(
+        "videography.html", 
+        title="Videography",
+        allVideos=allVideos,
+        LogedIn = LogedIn)
 
 @app.route("/about")
 def about():
-    return render_template("about.html", title="About")
+    LogedIn = isLogin()
+    return render_template(
+        "about.html",
+        title="About",
+        LogedIn = LogedIn)
 
 @app.route("/book_a_session", methods=['GET', 'POST'])
 def book_a_session():
+    LogedIn = isLogin()
     days = get_month_days()
     today = str(datetime.today()).split()[0]
     selectBookingPlan = SelectBookingPlan()
@@ -40,13 +55,21 @@ def book_a_session():
     if selectDateTimeForm.submit.data == True:
         print(selectDateTimeForm.date.data)
         print(selectDateTimeForm.time.data)
-        return render_template("booking_checkout.html", title="Book A Session",)
+        return render_template(
+            "booking_checkout.html", 
+            title="Book A Session",
+            LogedIn = LogedIn)
     
 
     if selectBookingPlan.inStudio.data == True:
         print("InStudio")
-        return render_template("booking_calender.html", title="Book A Session",
-    days=days,today=today,form=selectDateTimeForm)
+        return render_template(
+            "booking_calender.html", 
+            title="Book A Session",
+            days=days,
+            today=today,
+            form=selectDateTimeForm,
+            LogedIn = LogedIn)
     
     
     if selectBookingPlan.outStudio.data == True:
@@ -55,11 +78,15 @@ def book_a_session():
     if selectBookingPlan.events.data == True:
         print("Events")
     
-    return render_template("book_a_session.html", title="Book A Session",
-    form=selectBookingPlan)
+    return render_template(
+        "book_a_session.html",
+        title="Book A Session",
+        form=selectBookingPlan,
+        LogedIn = LogedIn)
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
+    LogedIn = isLogin()
     form = SignupForm()
     print("SIGNUP")
     if form.submit.data == True:
@@ -74,14 +101,16 @@ def signup():
             flash(isError["MESSAGE"],"success")
 
             
-    return render_template("signup.html",title="Sign up",form=form)
+    return render_template(
+        "signup.html",
+        title="Sign up",
+        form=form,
+        LogedIn = LogedIn)
 
 @app.route("/login",methods=['POST','GET'])
 def login():
-
-    # userID = request.cookies.get("userID")
-    # if userID != None :
-    #     print(userID)
+    LogedIn = isLogin()
+    
     form = LoginForm()
     forgot_form=ForgotForm()
 
@@ -92,9 +121,9 @@ def login():
             flash(loginResp["MESSAGE"],"danger")
         else:
             flash(loginResp["MESSAGE"],"secondary")
-            # webResp = make_response(redirect("photography"))
-            # webResp.set_cookie("userID","#Admin")
-            # return  webResp
+            webResp = make_response(redirect("photography"))
+            webResp.set_cookie("userID","#Admin")
+            return  webResp
 
         # redirect(url_for('login'))
     
@@ -107,8 +136,22 @@ def login():
             flash(resetResp["MESSAGE"],"secondary")
 
 
-    return render_template("login.html",title="Log in",form=form,forgot_form=forgot_form)
+    return render_template(
+        "login.html",
+        title="Log in",
+        form=form,
+        forgot_form=forgot_form,
+        LogedIn = LogedIn)
 
+@app.route("/profile")
+def profile():
+    LogedIn = isLogin()
+    if LogedIn == False:
+        return redirect("login")
+    return render_template(
+        "account_profile.html",
+        title="Account",
+        LogedIn = LogedIn)
 
 
 def get_admin_key():

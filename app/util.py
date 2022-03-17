@@ -1,4 +1,6 @@
 import datetime
+from flask import request
+
 def get_month (year: int, weekday: int):
     start = datetime.datetime (year=year, month=1, day=1)
     '''
@@ -25,6 +27,14 @@ def get_month_days(
 
     return days
 
+
+def isLogin():
+    LogedIn = False
+    userID = request.cookies.get("userID")
+    if userID != None :
+        LogedIn = True
+    
+    return LogedIn
 # print(datetime.date(datetime.date.today().year,datetime.date.today().month,datetime.date.today().day).isocalendar())
 # print(list(map (lambda x: str (x.date()), get_month (2022, 10))))
 # print(get_month_days())
