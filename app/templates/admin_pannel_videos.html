@@ -1,39 +1,32 @@
 {% extends "admin_pannel_layout.html"%}
 
 {% block content%}
-
-
 <div id="videography">
     <h1>Videography</h1>
     <form method="POST" enctype="multipart/form-data">
-    {{ form.hidden_tag() }}
+        {{ form.hidden_tag() }}
 
     {{form.title(class="form-control form-control-md mb-3",placeholder="Title")}}
     {{form.videoUrl(class="form-control form-control-md mb-3",placeholder="URL")}}
     {{form.submit(class="btn btn-md btn-primary btn-block") }}
-    <hr>
+        <hr>
     </form>
-
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 align-items-stretch g-4 py-5">
-    {% for video in allVideos %}
-    <div class="col pb-3">
-        <div class="video-card shadow-lg">
-            <iframe
-                width="100%"
-                height="100%"
-                src="{{video[3]}}"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-            ></iframe>
+        {% for video in allVideos %}
+        <div class="col pb-3">
+            <div class="video-card shadow-lg">
+                <iframe
+                    width="100%"
+                    height="100%"
+                    src="{{video[3]}}"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                ></iframe>
+            </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-  </div>
-  
 </div>
-
-
-
 {% endblock %}

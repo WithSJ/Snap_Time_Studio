@@ -5,64 +5,38 @@
     <h1 class="display-4 fw-normal" style="font-family: 'Dancing Script', cursive;">{{title}}</h1>
     <p class="fs-5 text-muted">Quickly build an effective pricing table for your potential customers with this Bootstrap example.</p>
 </div>
-
-
 <form class="form-signin" action="" method="POST">
-  {{ form.hidden_tag() }}
-
-  
-
-<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-    <div class="col">
-        <div class="card mb-4 rounded-3 shadow-sm">
-            
-          <img src="../static/img/3.jpg" alt="..." class="img-thumbnail">
-          
-          <h2>Family Photography</h2>
-
-          <p>2 hr 30 min</p> 
-          <span>150 US dollars</span>
-          
-          {{form.inStudio(style="width: 40%;margin-left:30%; margin-bottom: 1rem;",class=" mt-5 btn active btn-lg btn-outline-secondary")}}
-
-            
+    {{ form.hidden_tag() }}
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <img src="../static/img/3.jpg" alt="..." class="img-thumbnail">
+                <h2>Family Photography</h2>
+                <p>2 hr 30 min</p>
+                <span>150 US dollars</span>
+                {{form.inStudio(style="width: 40%;margin-left:30%; margin-bottom: 1rem;",class=" mt-5 btn active btn-lg btn-outline-secondary")}}
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <img src="../static/img/7.jpg" alt="..." class="img-thumbnail">
+                <h2>Family Photography</h2>
+                <p>2 hr 30 min</p>
+                <span>150 US dollars</span>
+                {{form.outStudio(style="width: 40%;margin-left:30%; margin-bottom: 1rem;",class=" mt-5 btn active btn-lg btn-outline-secondary")}}
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <img src="../static/img/5.jpg" alt="..." class="img-thumbnail">
+                <h2>Family Photography</h2>
+                <p>2 hr 30 min</p>
+                <span>150 US dollars</span>
+                {{form.events(style="width: 40%;margin-left:30%; margin-bottom: 1rem;",class=" mt-5 btn active btn-lg btn-outline-secondary")}}
+            </div>
         </div>
     </div>
-
-    <div class="col">
-      <div class="card mb-4 rounded-3 shadow-sm">
-          
-        <img src="../static/img/7.jpg" alt="..." class="img-thumbnail">
-        
-        <h2>Family Photography</h2>
-
-        <p>2 hr 30 min</p> 
-        <span>150 US dollars</span>
-        
-        {{form.outStudio(style="width: 40%;margin-left:30%; margin-bottom: 1rem;",class=" mt-5 btn active btn-lg btn-outline-secondary")}}
-          
-      </div>
-  </div>
-
-  <div class="col">
-    <div class="card mb-4 rounded-3 shadow-sm">
-        
-      <img src="../static/img/5.jpg" alt="..." class="img-thumbnail">
-      
-      <h2>Family Photography</h2>
-
-      <p>2 hr 30 min</p> 
-      <span>150 US dollars</span>
-      
-      {{form.events(style="width: 40%;margin-left:30%; margin-bottom: 1rem;",class=" mt-5 btn active btn-lg btn-outline-secondary")}}
-        
-    </div>
-</div>
-
-</div>
-
 </form>
-
 <!-- <h2 class="display-6 text-center mb-4">Compare plans</h2> -->
 <!-- <div class="table-responsive">
     <table class="table text-center">
