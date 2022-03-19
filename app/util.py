@@ -1,6 +1,6 @@
 import datetime
 from flask import request
-
+from random import randint
 def get_month (year: int, weekday: int):
     start = datetime.datetime (year=year, month=1, day=1)
     '''
@@ -35,6 +35,10 @@ def isLogin():
         LogedIn = True
     
     return LogedIn
+
+def get_key():
+    AdminKey = hex(randint(0,9**64))[2:]
+    return AdminKey
 # print(datetime.date(datetime.date.today().year,datetime.date.today().month,datetime.date.today().day).isocalendar())
 # print(list(map (lambda x: str (x.date()), get_month (2022, 10))))
 # print(get_month_days())

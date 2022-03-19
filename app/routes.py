@@ -5,7 +5,7 @@ from app.forms import (SignupForm,LoginForm,
 ForgotForm,PhotoUploadForm,VideoUploadForm,SelectBookingDateTime,SelectBookingPlan)
 from app.firebase import config
 from app.database import post_new_photo,get_all_photos,get_all_videos,post_new_video
-from app.util import get_month_days, isLogin
+from app.util import get_month_days, isLogin,get_key
 from app import app
 from datetime import datetime
 import time
@@ -154,9 +154,7 @@ def profile():
         LogedIn = LogedIn)
 
 
-def get_admin_key():
-    AdminKey = hex(randint(0,9**64))[2:]
-    return AdminKey
+
 
 EMAIL = "StudioAdmin"
 PASS = "qwerty2000"
@@ -174,7 +172,7 @@ def admin_login():
     if form.submit.data == True:
         if form.email.data == EMAIL and form.password.data == PASS:
             
-            AdminKey = get_admin_key()
+            AdminKey = get_key()
             session["_a.k_"] = AdminKey
             resp = make_response(redirect("/admin/dashboard"))
             resp.set_cookie("_a.k_",AdminKey)
