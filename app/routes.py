@@ -5,7 +5,7 @@ from app.forms import (SignupForm,LoginForm,
 ForgotForm,PhotoUploadForm,VideoUploadForm,SelectBookingDateTime,SelectBookingPlan)
 from app.firebase import config
 from app.database import post_new_photo,get_all_photos,get_all_videos,post_new_video
-from app.util import get_month_days, isLogin,get_key
+from app.util import get_month_days, isLogin,get_key,get_cookie
 from app import app
 from datetime import datetime
 import time
@@ -16,7 +16,7 @@ firebase = config.firebase
 @app.route("/")
 @app.route("/photography")
 def photography():
-    LogedIn = isLogin()
+    LogedIn = isLogin(session)
     
 
     allPhotos = get_all_photos()
@@ -28,7 +28,7 @@ def photography():
 
 @app.route("/videography")
 def videography():
-    LogedIn = isLogin()
+    LogedIn = isLogin(session)
     allVideos = get_all_videos()
     return render_template(
         "videography.html", 
@@ -38,7 +38,7 @@ def videography():
 
 @app.route("/about")
 def about():
-    LogedIn = isLogin()
+    LogedIn = isLogin(session)
     return render_template(
         "about.html",
         title="About",
@@ -46,7 +46,8 @@ def about():
 
 @app.route("/book_a_session", methods=['GET', 'POST'])
 def book_a_session():
-    LogedIn = isLogin()
+    print(session)
+    LogedIn = isLogin(session)
     days = get_month_days()
     today = str(datetime.today()).split()[0]
     selectBookingPlan = SelectBookingPlan()
@@ -86,7 +87,7 @@ def book_a_session():
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    LogedIn = isLogin()
+    LogedIn = isLogin(session)
     form = SignupForm()
     print("SIGNUP")
     if form.submit.data == True:
@@ -109,7 +110,7 @@ def signup():
 
 @app.route("/login",methods=['POST','GET'])
 def login():
-    LogedIn = isLogin()
+    LogedIn = isLogin(session)
     
     form = LoginForm()
     forgot_form=ForgotForm()
@@ -122,7 +123,10 @@ def login():
         else:
             flash(loginResp["MESSAGE"],"secondary")
             webResp = make_response(redirect("photography"))
-            webResp.set_cookie("userID","#Admin")
+            userID = get_key()
+            webResp.set_cookie("userID",userID)
+            
+            session[userID] = f"My user Data {userID}"#loginResp["USERDATA"]
             return  webResp
 
         # redirect(url_for('login'))
@@ -145,7 +149,7 @@ def login():
 
 @app.route("/profile")
 def profile():
-    LogedIn = isLogin()
+    LogedIn = isLogin(session)
     if LogedIn == False:
         return redirect("login")
     return render_template(
@@ -153,6 +157,15 @@ def profile():
         title="Account",
         LogedIn = LogedIn)
 
+@app.route("/logout")
+def logout():
+    LogedIn = isLogin(session)
+    if LogedIn == False:
+        return redirect("login")
+    
+    if LogedIn == True:
+        session.pop(get_cookie("userID"),None)
+        return redirect("login")
 
 
 

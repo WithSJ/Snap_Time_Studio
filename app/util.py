@@ -28,13 +28,18 @@ def get_month_days(
     return days
 
 
-def isLogin():
+def isLogin(session):
     LogedIn = False
     userID = request.cookies.get("userID")
-    if userID != None :
+    if userID in session :
         LogedIn = True
     
     return LogedIn
+
+def get_cookie(name):
+    cookie = request.cookies.get(name)
+    return cookie
+    
 
 def get_key():
     AdminKey = hex(randint(0,9**64))[2:]
