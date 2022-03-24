@@ -1,4 +1,4 @@
-from libs.applibs.firebase.config import firebase
+from app.firebase.config import firebase
 
 database = firebase.database()
 

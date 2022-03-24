@@ -1,6 +1,6 @@
 from app.firebase.config import firebase
 from app.firebase.utils import Validator,User
-# from libs.applibs.firebase.database import CreateNewUser
+from app.firebase.database import CreateNewUser
 
 Auth = firebase.auth()
 
@@ -19,7 +19,7 @@ def SignUp(email,password,username,fullname):
     try:
         user=Auth.create_user_with_email_and_password(email,password)
         Auth.send_email_verification(user["idToken"])
-        # CreateNewUser(user["localId"],fullname=fullname,username=username)
+        CreateNewUser(user["localId"],fullname=fullname,username=username)
         
         return {"ERROR": False,
             "MESSAGE":"Account created. Check your email for verification."}
