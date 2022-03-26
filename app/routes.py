@@ -5,6 +5,7 @@ from app.forms import (SignupForm,LoginForm,
 ForgotForm,PhotoUploadForm,VideoUploadForm,SelectBookingDateTime,SelectBookingPlan)
 from app.firebase import config
 from app.database import post_new_photo,get_all_photos,get_all_videos,post_new_video
+from app.firebase.database import UploadPhotosData_onFirebase, UploadVideosData_onFirebase
 from app.util import get_month_days, isLogin,get_key,get_cookie
 from app import app
 from datetime import datetime
@@ -56,6 +57,7 @@ def book_a_session():
     if selectDateTimeForm.submit.data == True:
         print(selectDateTimeForm.date.data)
         print(selectDateTimeForm.time.data)
+
         return render_template(
             "booking_checkout.html", 
             title="Book A Session",
@@ -236,10 +238,16 @@ def admin_photos():
                 form.month.data) +"-"+ str(
                 form.day.data)
         # End Geting Date
-        
+        id= str(time.time()).replace(".","")
         post_new_photo(
-            id= str(time.time()).replace(".",""),
+            id,
             title= photoTitle,dateTime=dateTime,image=photo)
+        
+        # Upload photos data on firebase
+        UploadPhotosData_onFirebase(
+            id,
+            title= photoTitle,dateTime=dateTime,image=photo
+        )
 
     allPhotos = get_all_photos()
 
@@ -264,11 +272,20 @@ def admin_videos():
         videoUrl = form.videoUrl.data
 
         dateTime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        id= str(time.time()).replace(".","")
         post_new_video(
-            id= str(time.time()).replace(".",""),
+            id,
             title=videoTitle,
             dateTime=dateTime,
             videoUrl=videoUrl)
+
+        UploadVideosData_onFirebase(
+            id,
+            title=videoTitle,
+            dateTime=dateTime,
+            videoUrl=videoUrl
+
+        )
 
     allVideos = get_all_videos()
 

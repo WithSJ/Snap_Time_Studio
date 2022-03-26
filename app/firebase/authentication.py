@@ -19,7 +19,7 @@ def SignUp(email,password,username,fullname):
     try:
         user=Auth.create_user_with_email_and_password(email,password)
         Auth.send_email_verification(user["idToken"])
-        CreateNewUser(user["localId"],fullname=fullname,username=username)
+        CreateNewUser(user["localId"],fullname=fullname,username=username,userData=user)
         
         return {"ERROR": False,
             "MESSAGE":"Account created. Check your email for verification."}
