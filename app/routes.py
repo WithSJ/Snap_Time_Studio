@@ -5,7 +5,9 @@ from app.forms import (SignupForm,LoginForm,
 ForgotForm,PhotoUploadForm,VideoUploadForm,SelectBookingDateTime,SelectBookingPlan)
 from app.firebase import config
 from app.database import post_new_photo,get_all_photos,get_all_videos,post_new_video
-from app.firebase.database import UploadPhotosData_onFirebase, UploadVideosData_onFirebase
+from app.firebase.database import ( UploadPhotosData_onFirebase, 
+                                    UploadVideosData_onFirebase,
+                                    GetData)
 from app.util import get_month_days, isLogin,get_key,get_cookie
 from app import app
 from datetime import datetime
@@ -55,13 +57,41 @@ def book_a_session():
     selectDateTimeForm = SelectBookingDateTime()
 
     if selectDateTimeForm.submit.data == True:
-        print(selectDateTimeForm.date.data)
-        print(selectDateTimeForm.time.data)
+        selectDate = selectDateTimeForm.date.data
+        selectTime = selectDateTimeForm.time.data
+        
+        
+        if selectDate == "" or selectTime == "":
+            return render_template(
+            "booking_calender.html", 
+            title="Book A Session",
+            days=days,
+            today=today,
+            form=selectDateTimeForm,
+            LogedIn = LogedIn,)
+        
+        userID = get_cookie("userID")
+        userdata = GetData(session[userID])
+        print(userdata)
+        
+
+        data = {
+            "selectDate" : selectDate,
+            "selectTime" : selectTime,
+            "productName" : "Studio Photography",
+            "numberPhotos" : "3 Three",
+            "selectedTypes" : "Light, Dark, Clasic, Holi, Party",
+            "userFullname" : userdata["Fullname"],
+            "userUsername" : userdata["Username"],
+            "userEmail" : userdata["UserData"]["email"]
+
+            }
 
         return render_template(
             "booking_checkout.html", 
             title="Book A Session",
-            LogedIn = LogedIn)
+            LogedIn = LogedIn,
+            data = data)
     
 
     if selectBookingPlan.inStudio.data == True:
@@ -128,7 +158,7 @@ def login():
             userID = get_key()
             webResp.set_cookie("userID",userID)
             
-            session[userID] = f"My user Data {userID}"#loginResp["USERDATA"]
+            session[userID] = loginResp["USERDATA"].localId
             return  webResp
 
         # redirect(url_for('login'))

@@ -11,49 +11,58 @@
             <div class="row g-5">
                 <div class="col-md-5 col-lg-4 order-md-last">
                     <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-primary">Your cart</span>
-                        <span class="badge bg-primary rounded-pill">3</span>
+                        <span class="text-secondary">Booking Summary</span>
+                        <!-- <span class="badge bg-primary rounded-pill">3</span> -->
                     </h4>
                     <ul class="list-group mb-3">
-                        <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <li class="list-group-item d-flex justify-content-between lh-sm bg-secondary bg-opacity-10">
                             <div>
-                                <h6 class="my-0">Product name</h6>
-                                <small class="text-muted">Brief description</small>
+                                <h6 class="my-0">{{data["productName"]}}</h6>
+                                <small class="text-muted">Portfolio</small>
                             </div>
-                            <span class="text-muted">&#8377;12</span>
+                            <span class="text-muted">&#8377;100/per photo</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between lh-sm">
                             <div>
-                                <h6 class="my-0">Second product</h6>
-                                <small class="text-muted">Brief description</small>
+                                <h6 class="my-0">{{data["selectDate"] }}, {{data["selectTime"]}}</h6>
+                                <small class="text-muted">Date & Time</small>
                             </div>
-                            <span class="text-muted">&#8377;8</span>
+                            <!-- <span class="text-muted">&#8377;8</span> -->
                         </li>
                         <li class="list-group-item d-flex justify-content-between lh-sm">
                             <div>
-                                <h6 class="my-0">Third item</h6>
-                                <small class="text-muted">Brief description</small>
+                                <h6 class="my-0">{{data["numberPhotos"]}}</h6>
+                                <small class="text-muted">Numbers of photos</small>
                             </div>
-                            <span class="text-muted">&#8377;5</span>
+                            <span class="text-muted">&#8377;300</span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between bg-light">
+                        
+                        <li class="list-group-item d-flex justify-content-between lh-sm">
+                            <div>
+                                <h6 class="my-0">{{data["selectedTypes"]}}</h6>
+                                <small class="text-muted">Selected Types</small>
+                            </div>
+                            <!-- <span class="text-muted">&#8377;5</span> -->
+                        </li>
+
+                        <!-- <li class="list-group-item d-flex justify-content-between bg-light">
                             <div class="text-success">
                                 <h6 class="my-0">Promo code</h6>
                                 <small>EXAMPLECODE</small>
                             </div>
                             <span class="text-success">−&#8377;5</span>
-                        </li>
+                        </li> -->
                         <li class="list-group-item d-flex justify-content-between">
                             <span>Total (&#8377;)</span>
-                            <strong>&#8377;20</strong>
+                            <strong>&#8377;300</strong>
                         </li>
                     </ul>
-                    <form class="card p-2">
+                    <!-- <form class="card p-2">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Promo code">
                             <button type="submit" class="btn btn-secondary">Redeem</button>
                         </div>
-                    </form>
+                    </form> -->
                 </div>
                 <div class="col-md-7 col-lg-8">
                     <h4 class="mb-3">Billing address</h4>
@@ -66,8 +75,8 @@
                                     type="text"
                                     class="form-control"
                                     id="firstName"
-                                    placeholder=""
-                                    value=""
+                                    placeholder="Firstname"
+                                    value={{data["userFullname"]}}
                                     disabled
                                 >
                                 <div class="invalid-feedback">
@@ -84,6 +93,7 @@
                                         class="form-control"
                                         id="username"
                                         placeholder="Username"
+                                        value={{data["userUsername"]}}
                                         disabled
                                     >
                                     <div class="invalid-feedback">
@@ -93,13 +103,14 @@
                             </div>
                             <div class="col-12">
                                 <label for="email" class="form-label">Email
-                                    <span class="text-muted">(Optional)</span>
+                                    
                                 </label>
                                 <input
                                     type="email"
                                     class="form-control"
                                     id="email"
-                                    placeholder="you@example.com"
+                                    value={{data["userEmail"]}}
+                                    placeholder="your@email.com"
                                     disabled
                                 >
                                 <div class="invalid-feedback">
@@ -154,6 +165,86 @@
                                 <label for="state" class="form-label">Area</label>
                                 <select class="form-select" id="state" required>
                                     <option>Ajmer</option>
+                                    <option>Vaishali Nagar</option>
+                                    <option>Kundan Nagar</option>
+                                    <option>Pahar Ganj</option>
+                                    <option>Chandra Vardai Nagar</option>
+                                    <option>Subhash Nagar</option>
+                                    <option>Civil Lines</option>
+                                    <option>Ajmer District, Rajasthan</option>
+                                    <option>Dhola Bhata Colony</option>
+                                    <option>Adarsh Nagar</option>
+                                    <option>Dayanand Colony</option>
+                                    <option>Pragati Nagar</option>
+                                    <option>Makadwali</option>
+                                    <option>Railway Quarters</option>
+                                    <option>Gulab Bari</option>
+                                    <option>Gandhi Nagar</option>
+                                    <option>Indra Colony</option>
+                                    <option>Tilak Nagar</option>
+                                    <option>Parbatpura</option>
+                                    <option>Ajay Nagar </option>
+                                    <option>Ghooghra</option>
+                                    <option>Gegal</option>
+                                    <option>Madanganj</option>
+                                    <option>Parbatpura</option>
+                                    <option>Topdara</option>
+                                    <option>Bhajan Ganj</option>
+                                    <option>Pal Bhichala</option>
+                                    <option>Civil Lines</option>
+                                    <option>Dargah Bazar</option>
+                                    <option>Makhupura District</option>
+                                    <option>Arya Nagar</option>
+                                    <option>Ganj</option>
+                                    <option>Mahanton Ka Mohalla</option>
+                                    <option>Adarsh Nagar</option>
+                                    <option>Naya Bazar</option>
+                                    <option>Kala Bagh</option>
+                                    <option>Fatehlal Nagar</option>
+                                    <option>Onkar Nagar</option>
+                                    <option>Basant Vihar</option>
+                                    <option>Vivek Vihar Colony</option>
+                                    <option>Indira Colony</option>
+                                    <option>Kaisar Ganj</option>
+                                    <option>Awana</option>
+                                    <option>Mitra Niwas Colony</option>
+                                    <option>Prithviraj Nagar</option>
+                                    <option>Patel Nagar</option>
+                                    <option>Prithviraj Nagar</option>
+                                    <option>Mahesh Nagar</option>
+                                    <option>Adarash Colony</option>
+                                    <option>Teli Mohalla</option>
+                                    <option>Madanganj</option>
+                                    <option>Basant Vihar</option>
+                                    <option>Ganahera</option>
+                                    <option>Pushkar</option>
+                                    <option>Deshwali Mohalla</option>
+                                    <option>Agrasen Nagar</option>
+                                    <option>Parao</option>
+                                    <option>R K Colony</option>
+                                    <option>Vivek Vihar Colony</option>
+                                    <option>Dumada</option>
+                                    <option>New Kesari Colony</option>
+                                    <option>Bohra Colony</option>
+                                    <option>Bhat Mohalla</option>
+                                    <option>RICCO Industrial Area</option>
+                                    <option>Dhani Rathoran</option>
+                                    <option>Sawantsar</option>
+                                    <option>Hathi Bhata</option>
+                                    <option>Bapu Nagar</option>
+                                    <option>Civil Lines</option>
+                                    <option>Kishangarh</option>
+                                    <option>Kotra</option>
+                                    <option>Panchsheel Nagar</option>
+                                    <option>Pushkar</option>
+                                    <option>Gegal</option>
+                                    <option>Beawer</option>
+                                    <option>Bhajan Ganj</option>
+                                    <option>Daurai</option>
+                                    <option>Dayanand Colony</option>
+                                    <option>Ghooghra</option>
+                                    <option>Jatiya</option>
+    
                                 </select>
                                 <div class="invalid-feedback">
                                     Please provide a valid Area.
