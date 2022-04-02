@@ -70,11 +70,21 @@ def book_a_session():
             form=selectDateTimeForm,
             LogedIn = LogedIn,)
         
-        userID = get_cookie("userID")
-        userdata = GetData(session[userID])
-        print(userdata)
+        try:
+            userID = get_cookie("userID")
+            userdata = GetData(session[userID])
+            print(userdata)
+        except:
+            flash("You are not Loged In","danger")
+            return render_template(
+            "booking_calender.html", 
+            title="Book A Session",
+            days=days,
+            today=today,
+            form=selectDateTimeForm,
+            LogedIn = LogedIn,)
         
-
+        # Checkout page
         data = {
             "selectDate" : selectDate,
             "selectTime" : selectTime,
