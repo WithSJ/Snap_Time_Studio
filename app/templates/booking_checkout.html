@@ -122,7 +122,8 @@
                                 <input
                                     type="text"
                                     class="form-control"
-                                    id="address"
+                                    id="phone"
+                                    name="phoneNumber"
                                     placeholder="+91 99999 99999"
                                     required
                                 >
@@ -136,6 +137,7 @@
                                     type="text"
                                     class="form-control"
                                     id="address"
+                                    name="address"
                                     placeholder="1234 Main St"
                                     required
                                 >
@@ -145,7 +147,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label for="country" class="form-label">State</label>
-                                <select class="form-select" id="country" required>
+                                <select class="form-select" name="country" id="country" required>
                                     <option>Rajasthan</option>
                                 </select>
                                 <div class="invalid-feedback">
@@ -154,7 +156,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="state" class="form-label">City</label>
-                                <select class="form-select" id="state" required>
+                                <select class="form-select" name="city" id="city" required>
                                     <option>Ajmer</option>
                                 </select>
                                 <div class="invalid-feedback">
@@ -163,88 +165,12 @@
                             </div>
                             <div class="col-md-5">
                                 <label for="state" class="form-label">Area</label>
-                                <select class="form-select" id="state" required>
-                                    <option>Ajmer</option>
-                                    <option>Vaishali Nagar</option>
-                                    <option>Kundan Nagar</option>
-                                    <option>Pahar Ganj</option>
-                                    <option>Chandra Vardai Nagar</option>
-                                    <option>Subhash Nagar</option>
-                                    <option>Civil Lines</option>
-                                    <option>Ajmer District, Rajasthan</option>
-                                    <option>Dhola Bhata Colony</option>
-                                    <option>Adarsh Nagar</option>
-                                    <option>Dayanand Colony</option>
-                                    <option>Pragati Nagar</option>
-                                    <option>Makadwali</option>
-                                    <option>Railway Quarters</option>
-                                    <option>Gulab Bari</option>
-                                    <option>Gandhi Nagar</option>
-                                    <option>Indra Colony</option>
-                                    <option>Tilak Nagar</option>
-                                    <option>Parbatpura</option>
-                                    <option>Ajay Nagar </option>
-                                    <option>Ghooghra</option>
-                                    <option>Gegal</option>
-                                    <option>Madanganj</option>
-                                    <option>Parbatpura</option>
-                                    <option>Topdara</option>
-                                    <option>Bhajan Ganj</option>
-                                    <option>Pal Bhichala</option>
-                                    <option>Civil Lines</option>
-                                    <option>Dargah Bazar</option>
-                                    <option>Makhupura District</option>
-                                    <option>Arya Nagar</option>
-                                    <option>Ganj</option>
-                                    <option>Mahanton Ka Mohalla</option>
-                                    <option>Adarsh Nagar</option>
-                                    <option>Naya Bazar</option>
-                                    <option>Kala Bagh</option>
-                                    <option>Fatehlal Nagar</option>
-                                    <option>Onkar Nagar</option>
-                                    <option>Basant Vihar</option>
-                                    <option>Vivek Vihar Colony</option>
-                                    <option>Indira Colony</option>
-                                    <option>Kaisar Ganj</option>
-                                    <option>Awana</option>
-                                    <option>Mitra Niwas Colony</option>
-                                    <option>Prithviraj Nagar</option>
-                                    <option>Patel Nagar</option>
-                                    <option>Prithviraj Nagar</option>
-                                    <option>Mahesh Nagar</option>
-                                    <option>Adarash Colony</option>
-                                    <option>Teli Mohalla</option>
-                                    <option>Madanganj</option>
-                                    <option>Basant Vihar</option>
-                                    <option>Ganahera</option>
-                                    <option>Pushkar</option>
-                                    <option>Deshwali Mohalla</option>
-                                    <option>Agrasen Nagar</option>
-                                    <option>Parao</option>
-                                    <option>R K Colony</option>
-                                    <option>Vivek Vihar Colony</option>
-                                    <option>Dumada</option>
-                                    <option>New Kesari Colony</option>
-                                    <option>Bohra Colony</option>
-                                    <option>Bhat Mohalla</option>
-                                    <option>RICCO Industrial Area</option>
-                                    <option>Dhani Rathoran</option>
-                                    <option>Sawantsar</option>
-                                    <option>Hathi Bhata</option>
-                                    <option>Bapu Nagar</option>
-                                    <option>Civil Lines</option>
-                                    <option>Kishangarh</option>
-                                    <option>Kotra</option>
-                                    <option>Panchsheel Nagar</option>
-                                    <option>Pushkar</option>
-                                    <option>Gegal</option>
-                                    <option>Beawer</option>
-                                    <option>Bhajan Ganj</option>
-                                    <option>Daurai</option>
-                                    <option>Dayanand Colony</option>
-                                    <option>Ghooghra</option>
-                                    <option>Jatiya</option>
-    
+                                <select class="form-select" name="area" id="area" required>
+                                    <option>Select Area</option>
+                                    {%for area in AreaDataList%}
+                                    <option>{{area}}</option>
+                                    {%endfor%}
+                                    
                                 </select>
                                 <div class="invalid-feedback">
                                     Please provide a valid Area.
