@@ -59,7 +59,7 @@ def book_a_session():
     if selectDateTimeForm.submit.data == True:
         selectDate = selectDateTimeForm.date.data
         selectTime = selectDateTimeForm.time.data
-        
+        numPhotos = request.form["numPhotos"]
         
         if selectDate == "" or selectTime == "":
             return render_template(
@@ -89,12 +89,13 @@ def book_a_session():
             "selectDate" : selectDate,
             "selectTime" : selectTime,
             "productName" : "Studio Photography",
-            "numberPhotos" : "3 Three",
+            "numberPhotos" : numPhotos,
             "selectedTypes" : "Light, Dark, Clasic, Holi, Party",
             "userFullname" : userdata["Fullname"],
             "userUsername" : userdata["Username"],
-            "userEmail" : userdata["UserData"]["email"]
-
+            "userEmail" : userdata["UserData"]["email"],
+            "photosFees" : int(numPhotos) * 100,
+            "totalFees" : sum([int(numPhotos) * 100,])
             }
 
         return render_template(
