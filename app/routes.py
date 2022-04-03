@@ -19,10 +19,11 @@ firebase = config.firebase
 @app.route("/")
 @app.route("/photography")
 def photography():
+    """Show photos page with photos galery"""
     LogedIn = isLogin(session)
     
-
     allPhotos = get_all_photos()
+    # get all photos data
     return render_template(
         "photography.html", 
         title="Photography",
@@ -31,8 +32,11 @@ def photography():
 
 @app.route("/videography")
 def videography():
+    """Show Videos page with photos galery"""
     LogedIn = isLogin(session)
+
     allVideos = get_all_videos()
+    # get all videos data
     return render_template(
         "videography.html", 
         title="Videography",
@@ -41,6 +45,7 @@ def videography():
 
 @app.route("/about")
 def about():
+    """About page for website details and devlopers"""
     LogedIn = isLogin(session)
     return render_template(
         "about.html",
@@ -49,19 +54,34 @@ def about():
 
 @app.route("/book_a_session", methods=['GET', 'POST'])
 def book_a_session():
+    """Booking or orders page for user so they can get our plans"""
     print(session)
-    LogedIn = isLogin(session)
-    days = get_month_days()
-    today = str(datetime.today()).split()[0]
-    selectBookingPlan = SelectBookingPlan()
-    selectDateTimeForm = SelectBookingDateTime()
+    LogedIn = isLogin(session) #check login status
+    
+    days = get_month_days() 
+    # get days and monts for calenders
 
+    today = str(datetime.today()).split()[0]
+    #get today date 
+    
+    selectBookingPlan = SelectBookingPlan()
+    # Booking plan form In Studio,Out Studio and On Event
+    
+    selectDateTimeForm = SelectBookingDateTime()
+    # select date time other things 
+
+    """select date time for booking and number of photos"""
     if selectDateTimeForm.submit.data == True:
+        # callender booking book btn clicked
+        # it redirect to checkout page
+
         selectDate = selectDateTimeForm.date.data
         selectTime = selectDateTimeForm.time.data
         numPhotos = request.form["numPhotos"]
         
         if selectDate == "" or selectTime == "":
+            #if date and time not select than kclick on book
+            # than it reload page
             return render_template(
             "booking_calender.html", 
             title="Book A Session",
@@ -71,11 +91,17 @@ def book_a_session():
             LogedIn = LogedIn,)
         
         try:
+            """
+                Try to get user from session if user not lodin
+                than it genrate error in so except code run.
+            """
             userID = get_cookie("userID")
             userdata = GetData(session[userID])
             print(userdata)
         except:
             flash("You are not Loged In","danger")
+            # show msg that you are not login
+            
             return render_template(
             "booking_calender.html", 
             title="Book A Session",
@@ -84,7 +110,7 @@ def book_a_session():
             form=selectDateTimeForm,
             LogedIn = LogedIn,)
         
-        # Checkout page
+        """data used in checkout page and redirect to checkout """
         data = {
             "selectDate" : selectDate,
             "selectTime" : selectTime,
@@ -97,7 +123,7 @@ def book_a_session():
             "photosFees" : int(numPhotos) * 100,
             "totalFees" : sum([int(numPhotos) * 100,])
             }
-
+        
         return render_template(
             "booking_checkout.html", 
             title="Book A Session",
@@ -106,6 +132,7 @@ def book_a_session():
     
 
     if selectBookingPlan.inStudio.data == True:
+        #This click for InStudio Page
         print("InStudio")
         return render_template(
             "booking_calender.html", 
@@ -117,9 +144,11 @@ def book_a_session():
     
     
     if selectBookingPlan.outStudio.data == True:
+        #This click for OutStudio Page
         print("OutStudio")
     
     if selectBookingPlan.events.data == True:
+        #This click for OnEvent Page
         print("Events")
     
     return render_template(
@@ -130,19 +159,29 @@ def book_a_session():
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
+    """SignUp page show so user can create account"""
     LogedIn = isLogin(session)
     form = SignupForm()
+    # Signup form 
+
     print("SIGNUP")
     if form.submit.data == True:
+        # if signup btn click
+        
+        """it send email pass and user and fullname 
+        and wait for any error in bool"""
         isError=SignUp(
             form.email.data,form.password.data,
             form.username.data,form.fullname.data
             )
         if isError["ERROR"]:
+            # if error true and show msg
             # print(isError["MESSAGE"])
             flash(isError["MESSAGE"],"danger")
+            # error msg show
         else:
             flash(isError["MESSAGE"],"success")
+            # Error is false msg show
 
             
     return render_template(
@@ -153,34 +192,51 @@ def signup():
 
 @app.route("/login",methods=['POST','GET'])
 def login():
+    """Show login page for user"""
     LogedIn = isLogin(session)
     
     form = LoginForm()
+    # login form 
+    
     forgot_form=ForgotForm()
+    # forgot form
 
     if form.submit.data == True:
+        # if login btn clicked
+
         loginResp=Login(form.email.data,form.password.data)
+        # get login responce is any error or not
+        
         if loginResp["ERROR"]:
-            
+            # if any error that show msg
             flash(loginResp["MESSAGE"],"danger")
         else:
             flash(loginResp["MESSAGE"],"secondary")
+            # show sccessfull login  msg
+
+            # We need to return responce of login with userID
+            # User ID saved in cookies
             webResp = make_response(redirect("photography"))
-            userID = get_key()
-            webResp.set_cookie("userID",userID)
+            userID = get_key() # userId gebrated
+            webResp.set_cookie("userID",userID) # userID saved in cookies
             
             session[userID] = loginResp["USERDATA"].localId
+            # userID saved in seesion with user login data
             return  webResp
 
         # redirect(url_for('login'))
     
     if forgot_form.reset.data == True:
+        # user password forgot btn clicked
         resetResp = PasswordReset(forgot_form.email.data)
+        # password reset responce
+
         if resetResp["ERROR"]:
-            
+            # if any error than show msg
             flash(resetResp["MESSAGE"],"danger")
         else:
             flash(resetResp["MESSAGE"],"secondary")
+            # show msg successful reset email send to user Email
 
 
     return render_template(
@@ -192,7 +248,8 @@ def login():
 
 @app.route("/profile")
 def profile():
-    LogedIn = isLogin(session)
+    """profile page only for user if logout than don't show """
+    LogedIn = isLogin(session) #check login status
     if LogedIn == False:
         return redirect("login")
     return render_template(
@@ -202,16 +259,22 @@ def profile():
 
 @app.route("/logout")
 def logout():
-    LogedIn = isLogin(session)
+    """User logout link remove from session using userid cookie"""
+
+    LogedIn = isLogin(session) # get login status
+
     if LogedIn == False:
-        return redirect("login")
+        # if lod out user than redirect to login page
+        return redirect("login") 
     
     if LogedIn == True:
+        # if user log in than remove user from session
+        # and redirect to login page
         session.pop(get_cookie("userID"),None)
         return redirect("login")
 
 
-
+# Admin Pannel Code
 EMAIL = "StudioAdmin"
 PASS = "qwerty2000"
 
