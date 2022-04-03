@@ -66,118 +66,108 @@
                 </div>
                 <div class="col-md-7 col-lg-8">
                     <h4 class="mb-3">Billing address</h4>
-                    <form class="needs-validation" novalidate>
+                    <form class="needs-validation" method="post" >
+                        {{ form.hidden_tag() }}
                         <div class="row g-3">
 
                             <div class="col-sm-6">
                                 <label for="firstName" class="form-label">Fullname</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="firstName"
-                                    placeholder="Firstname"
-                                    value={{data["userFullname"]}}
-                                    disabled
-                                >
-                                <div class="invalid-feedback">
-                                    Valid first name is required.
-                                </div>
+                                {{ 
+                                    form.fullname(
+                                    class="form-control",
+                                    placeholder="Firstname", 
+                                    value=data["userFullname"],
+                                    disabled=true) 
+                                }}
+                                
                             </div>
                             
                             <div class="col-6">
                                 <label for="username" class="form-label">Username</label>
                                 <div  class="input-group has-validation">
                                     <span class="input-group-text">@</span>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="username"
-                                        placeholder="Username"
-                                        value={{data["userUsername"]}}
-                                        disabled
-                                    >
-                                    <div class="invalid-feedback">
-                                        Your username is required.
-                                    </div>
+                                    {{ 
+                                        form.username(
+                                        class="form-control",
+                                        placeholder="Username", 
+                                        value=data["userUsername"],
+                                        disabled=true) 
+                                    }}
+                                    
                                 </div>
                             </div>
                             <div class="col-12">
                                 <label for="email" class="form-label">Email
                                     
                                 </label>
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    id="email"
-                                    value={{data["userEmail"]}}
-                                    placeholder="your@email.com"
-                                    disabled
-                                >
-                                <div class="invalid-feedback">
-                                    Please enter a valid email address for shipping updates.
-                                </div>
+                                {{ 
+                                    form.email(
+                                    class="form-control",
+                                    placeholder="Email", 
+                                    value=data["userEmail"],
+                                    disabled=true) 
+                                }}
+                                
                             </div>
                             <div class="col-12">
                                 <label for="address" class="form-label">Phone</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="phone"
-                                    name="phoneNumber"
-                                    placeholder="+91 99999 99999"
-                                    required
-                                >
-                                <div class="invalid-feedback">
-                                    Please enter your shipping address.
-                                </div>
+                                {{ 
+                                    form.phone(
+                                    class="form-control",
+                                    placeholder="+91 99999 99999", 
+                                    
+                                    ) 
+                                }}
+                                
+                                
                             </div>
                             <div class="col-12">
                                 <label for="address" class="form-label">Address</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="address"
-                                    name="address"
-                                    placeholder="1234 Main St"
-                                    required
-                                >
-                                <div class="invalid-feedback">
-                                    Please enter your shipping address.
-                                </div>
+                                {{ 
+                                    form.address(
+                                    class="form-control",
+                                    placeholder="1234 Main St", 
+                                    ) 
+                                }}
+                                
                             </div>
                             <div class="col-md-3">
                                 <label for="country" class="form-label">State</label>
-                                <select class="form-select" name="country" id="country" required>
-                                    <option>Rajasthan</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Please select a valid State.
-                                </div>
+                                
+                                {{ 
+                                    form.state(
+                                    class="form-select",
+                                    ) 
+                                }}
+                                
+                                
                             </div>
                             <div class="col-md-4">
                                 <label for="state" class="form-label">City</label>
-                                <select class="form-select" name="city" id="city" required>
-                                    <option>Ajmer</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Please provide a valid City.
-                                </div>
+                                
+                                {{ 
+                                    form.city(
+                                    class="form-select",
+                                    ) 
+                                }}
                             </div>
                             <div class="col-md-5">
                                 <label for="state" class="form-label">Area</label>
-                                <select class="form-select" name="area" id="area" required>
-                                    <option>Select Area</option>
-                                    {%for area in AreaDataList%}
-                                    <option>{{area}}</option>
-                                    {%endfor%}
-                                    
-                                </select>
-                                <div class="invalid-feedback">
-                                    Please provide a valid Area.
-                                </div>
+                             
+                                {{ 
+                                    form.area(
+                                    class="form-select",
+                                    ) 
+                                }}
                             </div>
                             <hr class="my-4">
-                            <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+                            {{ 
+                                form.checkoutSubmit(
+                                class="w-100 btn btn-primary btn-lg"
+                                ) 
+                            }}
+                        
+                        
                         </form>
                     </div>
                 </div>

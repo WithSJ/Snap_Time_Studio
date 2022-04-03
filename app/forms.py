@@ -1,8 +1,9 @@
+from calendar import c
 from flask_wtf import FlaskForm
 from wtforms import StringField,PasswordField,SubmitField
 from wtforms import SelectField,TextAreaField,BooleanField,FileField
 from wtforms.validators import DataRequired,Length,Email
-
+from app.webdata import AreaDataList
 class SignupForm(FlaskForm):
     
     email = StringField('Email',validators=[DataRequired(),Email()])
@@ -46,3 +47,14 @@ class SelectBookingPlan(FlaskForm):
     inStudio = SubmitField('Book Now')
     outStudio = SubmitField('Book Now')
     events = SubmitField('Book Now')
+
+class CheckoutForm(FlaskForm):
+    fullname = StringField('Full name',validators=[DataRequired(),Length(max=25)])
+    username = StringField('Username',validators=[DataRequired(),Length(min=5,max=25)])
+    email = StringField('Email',validators=[DataRequired(),Email()])
+    phone = StringField('Phone',validators=[DataRequired()])
+    address = StringField('Address',validators=[DataRequired()])
+    state = SelectField('State',choices=["Rajasthan",])
+    city = SelectField('City',choices=["Ajmer",])
+    area = SelectField('Area',choices=AreaDataList,)
+    checkoutSubmit = SubmitField('Continue to checkout')

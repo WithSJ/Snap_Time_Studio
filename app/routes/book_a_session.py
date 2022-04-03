@@ -1,8 +1,7 @@
 from app import app
 from app.util import isLogin,get_month_days,get_cookie
-from app.forms import SelectBookingPlan,SelectBookingDateTime
+from app.forms import SelectBookingPlan,SelectBookingDateTime,CheckoutForm
 from app.firebase.database import GetData
-from app.webdata import AreaDataList
 from flask import render_template,session,request,flash
 from datetime import datetime
 
@@ -67,6 +66,7 @@ def book_a_session():
             LogedIn = LogedIn,)
         
         """data used in checkout page and redirect to checkout """
+        checkoutForm = CheckoutForm()
         data = {
             "selectDate" : selectDate,
             "selectTime" : selectTime,
@@ -85,7 +85,7 @@ def book_a_session():
             title="Book A Session",
             LogedIn = LogedIn,
             data = data,
-            AreaDataList=AreaDataList)
+            form = checkoutForm)
     
 
     if selectBookingPlan.inStudio.data == True:
