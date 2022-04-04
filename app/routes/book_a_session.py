@@ -1,10 +1,11 @@
+from distutils.command import check
 from app import app
-from app.util import isLogin,get_month_days,get_cookie
+from app.util import get_key, isLogin,get_month_days,get_cookie
 from app.forms import SelectBookingPlan,SelectBookingDateTime,CheckoutForm
-from app.firebase.database import GetData
-from flask import render_template,session,request,flash
+from app.firebase.database import GetData,NewBookingOrder
+from flask import render_template,session,request,flash,make_response
 from datetime import datetime
-
+import time
 
 
 @app.route("/book_a_session", methods=['GET', 'POST'])
@@ -24,6 +25,9 @@ def book_a_session():
     
     selectDateTimeForm = SelectBookingDateTime()
     # select date time other things 
+
+    checkoutForm = CheckoutForm()
+    # checkout Form
 
     """select date time for booking and number of photos"""
     if selectDateTimeForm.submit.data == True:
@@ -66,7 +70,7 @@ def book_a_session():
             LogedIn = LogedIn,)
         
         """data used in checkout page and redirect to checkout """
-        checkoutForm = CheckoutForm()
+        
         data = {
             "selectDate" : selectDate,
             "selectTime" : selectTime,
@@ -80,13 +84,35 @@ def book_a_session():
             "totalFees" : sum([int(numPhotos) * 100,])
             }
         
-        return render_template(
+        webresp = make_response(
+            render_template(
             "booking_checkout.html", 
             title="Book A Session",
             LogedIn = LogedIn,
             data = data,
-            form = checkoutForm)
+            form = checkoutForm
+            )
+        )
+        dataID = get_key()
+        webresp.set_cookie("_chkout_",dataID)
+        session[dataID] = data
+ 
+        return webresp 
     
+    if checkoutForm.checkoutSubmit.data == True:
+        dataID = get_cookie("_chkout_")
+        data = session[dataID]
+        data["userPhone"] = checkoutForm.phone.data
+        data["userAddress"] = checkoutForm.address.data
+        data["userState"] = checkoutForm.state.data
+        data["userCity"] = checkoutForm.city.data
+        data["userArea"] = checkoutForm.area.data
+        userID = get_cookie("userID")
+        localID=session[userID]
+        timestamp = str(time.time()).split(".")[0]
+        NewBookingOrder(localId=localID,orderTimeStamp=timestamp,orderData=data)
+        return data
+
 
     if selectBookingPlan.inStudio.data == True:
         #This click for InStudio Page

@@ -47,3 +47,9 @@ def UploadVideosData_onFirebase(id,title,dateTime,videoUrl,videoTag=None):
             "VideoUrl" : videoUrl,
             "videoTag" : videoTag
         })
+
+def NewBookingOrder(localId:str,orderTimeStamp:str,orderData: dict)-> None:
+    database.child(
+        "BookingOrders").child(
+            localId).child(
+                orderTimeStamp).set(orderData)
