@@ -13,7 +13,8 @@ from app.routes import (
     signup,
     login,
     logout,
-    adminpannel
+    adminpannel,
+    profile
     )
 
 

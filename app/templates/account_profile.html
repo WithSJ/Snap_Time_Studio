@@ -89,6 +89,10 @@ body {
                     </div>
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                         <h1>Booking History</h1>
+                        {% for bookItem in myBooking[0]%}
+                            {{ myBooking[1][bookItem] }}
+                            <hr>
+                        {% endfor%}
                     </div>
                   </div>
         </div>

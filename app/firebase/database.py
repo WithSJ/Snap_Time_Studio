@@ -1,3 +1,4 @@
+from math import dist
 from app.firebase.config import firebase
 
 database = firebase.database()
@@ -55,3 +56,9 @@ def NewBookingOrder(localId:str,orderTimeStamp:str,orderData: dict)-> None:
         "MyBookingOrders").child(
             localId).child(
                 orderTimeStamp).set(orderData)
+
+def GetMyBookingOrders(localId):
+    data = database.child("MyBookingOrders").child(localId).get()
+    dataOrderKey = list(data.val())
+    dataOrder = dict(data.val())
+    return [dataOrderKey,dataOrder]
