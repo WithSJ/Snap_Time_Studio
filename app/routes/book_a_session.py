@@ -81,7 +81,9 @@ def book_a_session():
             "userUsername" : userdata["Username"],
             "userEmail" : userdata["UserData"]["email"],
             "photosFees" : int(numPhotos) * 100,
-            "totalFees" : sum([int(numPhotos) * 100,])
+            "totalFees" : sum([int(numPhotos) * 100,]),
+            "paymentStatus" : "Pending",
+            "orderStatus" : "Pending"
             }
         
         webresp = make_response(
@@ -100,17 +102,21 @@ def book_a_session():
         return webresp 
     
     if checkoutForm.checkoutSubmit.data == True:
+        userID = get_cookie("userID")
+        localID=session[userID]
         dataID = get_cookie("_chkout_")
         data = session[dataID]
+        
         data["userPhone"] = checkoutForm.phone.data
         data["userAddress"] = checkoutForm.address.data
         data["userState"] = checkoutForm.state.data
         data["userCity"] = checkoutForm.city.data
         data["userArea"] = checkoutForm.area.data
-        userID = get_cookie("userID")
-        localID=session[userID]
-        timestamp = str(time.time()).split(".")[0]
-        NewBookingOrder(localId=localID,orderTimeStamp=timestamp,orderData=data)
+        data["localID"] = localID
+        data["orderDateTime"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        timeStampID = str(time.time()).split(".")[0]
+        data["stampID"] = timeStampID
+        NewBookingOrder(localId=localID,orderTimeStamp=timeStampID,orderData=data)
         return data
 
 
