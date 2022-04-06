@@ -4,5 +4,9 @@
 
 <div id="orders">
     <h1>Orders</h1>
+    {% for order in allOrders[0] %}
+    {{allOrders[1][order]}}
+    <hr>
+    {% endfor %}
 </div>
 {% endblock %}

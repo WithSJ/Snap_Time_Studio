@@ -1,9 +1,11 @@
+import imp
 from flask import Flask, render_template,request,flash,make_response,redirect, session,url_for
 from app import firebase
 from app.firebase.authentication import SignUp,Login,PasswordReset
 from app.forms import (SignupForm,LoginForm,
 ForgotForm,PhotoUploadForm,VideoUploadForm,SelectBookingDateTime,SelectBookingPlan)
 from app.firebase import config
+from app.firebase.database import GetAllOrders
 from app.database import post_new_photo,get_all_photos,get_all_videos,post_new_video
 from app.firebase.database import ( UploadPhotosData_onFirebase, 
                                     UploadVideosData_onFirebase,
@@ -147,6 +149,17 @@ def admin_videos():
         "admin_pannel_videos.html", title="Admin",form=form,allVideos=allVideos
     )
 
+
+@app.route("/admin/orders")
+def admin_orders():
+    ak = request.cookies.get("_a.k_")
+    if "_a.k_" not in session:
+        return redirect("/admin")
+    else:
+        if ak != session["_a.k_"]:
+            return redirect("/admin")
+    allOrders = GetAllOrders()
+    return render_template("admin_pannel_orders.html",title="Admin",allOrders=allOrders)
 
 
 @app.route("/admin/signout",methods=['GET', 'POST'])

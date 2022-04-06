@@ -62,3 +62,9 @@ def GetMyBookingOrders(localId):
     dataOrderKey = list(data.val())
     dataOrder = dict(data.val())
     return [dataOrderKey,dataOrder]
+
+def GetAllOrders():
+    allOrders = database.child("BookingOrders").get().val()
+    allOrdersKey = list(allOrders)
+    allOrders = dict(allOrders)
+    return allOrdersKey,allOrders
